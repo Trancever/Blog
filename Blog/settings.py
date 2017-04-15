@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'pagedown',
     "markdown_deux",
-    #local stuff
+    # local stuff
     "comments",
     'posts',
 ]

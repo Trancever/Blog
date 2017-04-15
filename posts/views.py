@@ -25,8 +25,6 @@ def posts_create(request):
         instance.save()
         messages.success(request, "Successfully Created")
         return HttpResponseRedirect(instance.get_absolute_url())
-    else:
-        messages.error(request, "Not Successfully Created")
 
     context = {
         "form": form
@@ -90,13 +88,10 @@ def posts_detail(request, slug=None):
         )
         return HttpResponseRedirect(new_comment.content_object.get_absolute_url())
 
-    user = request.user
-
     context_data = {
         "object": instance,
         "share_string": share_string,
         "comment_form": comment_form,
-        # "user": user
     }
     return render(request, "post_detail.html", context_data)
 
@@ -147,8 +142,6 @@ def posts_update(request, slug=None):
         instance.save()
         messages.success(request, "Saved")
         return HttpResponseRedirect(instance.get_absolute_url())
-    else:
-        messages.error(request, "Not Saved")
 
     context_data = {
         "object": instance,
