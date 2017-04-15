@@ -1,0 +1,188 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block head_title %}Robimy bloga!{% endblock head_title %}</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,400,600,700&amp;lang=pl"/>
+
+    <style>
+        {% block style %}
+        {% endblock style %}
+    </style>
+
+    {% block head_extra %}
+
+    {% endblock head_extra %}
+
+    <link rel="stylesheet" href="{% static "css/base.css" %}"/>
+</head>
+<body>
+
+<div id="fb-root"></div>
+<script>(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "//connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v2.8";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+{% include "messages_display.html" %}
+
+<div class="container">
+    {% block content %}
+
+    {% endblock content %}
+</div>
+
+{% block footer %}
+    <style>
+        html {
+            position: relative;
+            min-height: 100%;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .footer {
+            position: absolute;
+            left: 0;
+            right: 0;
+            padding-top: 10px;
+            padding-bottom: 30px;
+            margin-top: 50px;
+            background-color: #EEEEEE;
+            font-family: 'Open Sans Condensed';
+        }
+
+        .container {
+            min-height: 100%;
+            color: #000 !important;
+        }
+
+        ul.float-right {
+            float: right;
+            display: block;
+        }
+
+        li {
+            margin-right: 1.8em;
+            display: list-item;
+            float: left;
+            padding-left: 0.3em;
+        }
+
+        li a {
+            color: #000;
+        }
+
+        li a:hover {
+            text-decoration: none;
+            color: #333;
+        }
+    </style>
+    <footer class="footer">
+        <div class="container">Copyright © Dawid Urbaniak
+            <ul class="float-right">
+                <li>
+                    <a href="#">O autorze</a>
+                </li>
+                <li>
+                    <a href="#">Kontakt</a>
+                </li>
+            </ul>
+        </div>
+    </footer>
+{% endblock footer %}
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="http://code.jquery.com/jquery-1.12.4.min.js"
+        integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+        crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".content-markdown").each(function () {
+            var content = $(this).text()
+            $(this).html(marked(content))
+        })
+
+        $(".post-detail-item img").each(function () {
+            $(this).addClass("img-responsive");
+        })
+
+        var contentInput = $("#id_content")
+
+        function setContent(value) {
+            $("#preview-content").html(marked(value))
+            $("#preview-content img").each(function () {
+                $(this).addClass("img-responsive")
+            })
+        }
+
+        setContent(contentInput.val())
+
+        contentInput.keyup(function () {
+            setContent($(this).val())
+        })
+
+        var titleInput = $("#id_title")
+
+        function setTitle(value) {
+            $("#preview-title").text(value)
+        }
+
+        setTitle(titleInput.val())
+
+        titleInput.keyup(function () {
+            setTitle($(this).val())
+        })
+
+        $(".comment-reply-btn").click(function (event) {
+            var link = $(this);
+            event.preventDefault();
+            $(this).parent().next(".comment-reply").fadeToggle("fast", function () {
+                if ($(this).is(":visible")) {
+                    link.text("Hide");
+                } else {
+                    link.text("Reply");
+                }
+            });
+        })
+
+        $(".comment-delete-btn").click(function (event) {
+            event.preventDefault();
+            $(this).parent().next(".comment-reply").fadeToggle("fast", function () {
+                if ($(this).is(":visible")) {
+                    link.text("Hide");
+                } else {
+                    link.text("Reply");
+                }
+            });
+        })
+    })
+</script>
+
+</body>
+</html>
