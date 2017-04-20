@@ -14,21 +14,11 @@ Including another URLconf
     2. Import the include() function: from django.conf.urls import url, include
     3. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf import settings
-from django.conf.urls import include, url
-from django.conf.urls.static import static
-from django.contrib import admin
+from django.conf.urls import url
 
-from .views import index
+from .views import delete_comment, edit_comment
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^posts/', include("posts.urls", namespace="posts")),
-    url(r'^comments/', include("comments.urls", namespace="comments")),
-    url(r'^accounts/', include('allauth.urls')),
-    url(r'$', index, name="index"),
+    url(r'^delete_comment/$', delete_comment, name="delete_comment"),
+    url(r'^edit_comment/$', edit_comment, name="edit_comment"),
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

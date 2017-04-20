@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.utils import timezone
 
 from django.db import models
 
@@ -29,6 +30,7 @@ class Comment(models.Model):
 
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     objects = CommentManager()
 
@@ -47,6 +49,10 @@ class Comment(models.Model):
         if self.parent is not None:
             return False
         return True
+
+    def save(self, *args, **kwargs):
+        self.updated = timezone.now().date()
+        return super(Comment, self).save(*args, **kwargs)
 
     class Meta:
         ordering = ["-timestamp"]

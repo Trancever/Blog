@@ -74,3 +74,24 @@ button.link:hover {
 span.btn-group {
     display: inline-block;
 }
+
+.validation-message {
+    display: none;
+    color: #a94442;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.showen {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
+
+.wmd-panel {
+    margin-left: 0px;
+    margin-right: 0px;
+    width: 100%;
+}

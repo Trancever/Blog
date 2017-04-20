@@ -12,7 +12,6 @@ from .models import Post
 from .forms import PostForm
 from comments.forms import CommentForm
 
-
 # Create your views here.
 
 def posts_create(request):
@@ -151,9 +150,17 @@ def posts_update(request, slug=None):
 
 
 def posts_delete(request, slug=None):
-    if not request.user.is_staff or not request.user.is_superuser:
-        raise Http404
     instance = get_object_or_404(Post, slug=slug)
-    instance.delete()
-    messages.success(request, "Successfully deleted")
-    return redirect("posts:list")
+    if request.user != instance.user:
+        if not request.user.is_staff or not request.user.is_superuser:
+            raise Http404
+
+    if request.POST.get("post_title") is not None:
+        instance.delete()
+        messages.success(request, "Post successfully deleted")
+        return HttpResponseRedirect("/posts/")
+
+    context_data = {
+        "object": instance,
+    }
+    return render(request, "post_delete.html", context_data)
