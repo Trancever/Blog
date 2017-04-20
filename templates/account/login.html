@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+    <div class="col-sm-offset-2 col-sm-8">
+        <div class="jumbotron login-jumbotron">
+            <a href="/accounts/facebook/login/">
+                <div class="fb"></div>
+            </a>
+            {% include "socialaccount/snippets/login_extra.html" %}
+
+            <div class="header center">Or sign in directly</div>
+
+            <form class="login" method="POST" action="{% url 'account_login' %}">
+                {% csrf_token %}
+                {{ form|crispy }}
+                {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                {% endif %}
+                <a class="forgot" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+                <button class="btn btn-primary center sign-in-button" type="submit">{% trans "Sign In" %}</button>
+            </form>
+
+            <div class="footnote center">
+                Don't have an account? Login with Facebook above or <a href="{% url 'account_signup' %}">Sign Up</a>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

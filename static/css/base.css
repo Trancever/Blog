@@ -95,3 +95,46 @@ span.btn-group {
     margin-right: 0px;
     width: 100%;
 }
+
+.fb {
+    background: url('/static/img/fb.png') no-repeat center top;
+    box-shadow: 2px 2px 8px rgba(0,0,0,.7);
+    border-radius: 5px;
+    width: 198px;
+    height: 37px;
+    margin: 80px auto;
+    overflow: hidden;
+}
+
+.header {
+    font-size: 19px;
+}
+
+.center {
+    margin: 20px auto;
+    display: block;
+    text-align: center;
+}
+
+.login-jumbotron {
+    margin-top: 40px;
+    padding-top: 20px;
+}
+
+.remember-forgot-section {
+    width: 31%;
+    text-align: left;
+    margin: 8px auto;
+    font-size: 11px;
+}
+
+.footnote {
+    position: relative;
+    top: 14px;
+    margin-top: 6px;
+    font-size: 11px;
+}
+
+.sign-in-button {
+    min-width: 150px;
+}
