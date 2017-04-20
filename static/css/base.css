@@ -25,7 +25,7 @@ html, body {
     color: #000 !important;
 }
 
-ul.float-right {
+.float-right {
     float: right;
     display: block;
 }
@@ -42,7 +42,6 @@ li a {
 }
 
 li a:hover {
-    text-decoration: none;
     color: #333;
 }
 
@@ -68,7 +67,7 @@ button.link {
 }
 
 button.link:hover {
-    text-decoration: underline;
+    color: #337acc;
 }
 
 span.btn-group {
@@ -98,11 +97,11 @@ span.btn-group {
 
 .fb {
     background: url('/static/img/fb.png') no-repeat center top;
-    box-shadow: 2px 2px 8px rgba(0,0,0,.7);
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, .7);
     border-radius: 5px;
     width: 198px;
     height: 37px;
-    margin: 80px auto;
+    margin: 60px auto;
     overflow: hidden;
 }
 
@@ -111,7 +110,7 @@ span.btn-group {
 }
 
 .center {
-    margin: 20px auto;
+    margin: 10px auto;
     display: block;
     text-align: center;
 }
@@ -131,10 +130,13 @@ span.btn-group {
 .footnote {
     position: relative;
     top: 14px;
-    margin-top: 6px;
     font-size: 11px;
 }
 
 .sign-in-button {
     min-width: 150px;
+}
+
+a:hover {
+    text-decoration: none;
 }

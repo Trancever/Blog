@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'^comments/', include("comments.urls", namespace="comments")),
     url(r'^accounts/logout/$', logout, {'next_page': '/'}),
     url(r'^accounts/', include('allauth.urls')),
-    url(r'$', index, name="index"),
+    url(r'^$', index, name="home_page"),
 ]
 
 if settings.DEBUG:
