@@ -27,7 +27,7 @@ $(document).ready(function () {
     $("form.comment-edit").on('submit', function (event) {
         event.preventDefault();
         var comment_content = $(this).children("#div_id_content").children(".controls").children("#id_content").val();
-        if(comment_content == "") {
+        if (comment_content == "") {
             console.log("Content is empty. Validation error.")
             $(this).children("#comment-content-validation-message").show();
             $(this).children("#div_id_content").children(".controls").children("#id_content").focus();
@@ -101,6 +101,16 @@ $(document).ready(function () {
             }
         });
     };
+
+    // Validate if user is authenticated and can post comments
+    $(".comment-create").on('submit', function (event) {
+        // event.preventDefault();
+        console.log($("#comment-user-validator").val() )
+        if ($("#comment-user-validator").val() == "False") {
+            $(this).children("#comment-content-validation-message").show();
+            event.preventDefault();
+        }
+    })
 })
 
 $(function () {

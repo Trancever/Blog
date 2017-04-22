@@ -140,3 +140,11 @@ span.btn-group {
 a:hover {
     text-decoration: none;
 }
+
+.black-color {
+    color: black;
+}
+
+.jumbotron p {
+    font-size: 14px;
+}
