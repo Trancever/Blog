@@ -24,11 +24,12 @@ from .views import index
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^posts/', include("posts.urls", namespace="posts")),
+    url(r'^', include("posts.urls", namespace="posts")),
     url(r'^comments/', include("comments.urls", namespace="comments")),
     url(r'^accounts/logout/$', logout, {'next_page': '/'}),
     url(r'^accounts/', include('allauth.urls')),
-    url(r'^$', index, name="home_page"),
+    url(r'^api/posts/', include("posts.api.urls", namespace="posts-api")),
+    # url(r'^$', index, name="home_page"),
 ]
 
 if settings.DEBUG:
