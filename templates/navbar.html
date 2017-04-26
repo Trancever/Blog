@@ -1,0 +1,16 @@
+<div class="blog-masthead">
+    <div class="container">
+        <nav class="blog-nav">
+            <a class="blog-nav-item active" href="{% url 'posts:list' %}">Blog</a>
+            <a class="blog-nav-item" href="#">Contact</a>
+            <a class="blog-nav-item" href="#">About</a>
+            {% if not user.is_authenticated %}
+            <a class="blog-nav-item pull-right" href="{% url 'account_signup' %}">Register</a>
+            <a class="blog-nav-item pull-right" href="{% url 'account_login' %}">Login</a>
+            {% else %}
+            <a class="blog-nav-item pull-right" href="{% url 'account_logout' %}">Logout</a>
+            {% endif %}
+        </nav>
+    </div>
+</div>
+</br>

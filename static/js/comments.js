@@ -3,11 +3,11 @@ $(document).ready(function () {
         var link = $(this);
         event.preventDefault();
         console.log("reply link clicked")
-        $(this).parent().parent().next().next(".comment-reply").toggle("slow", function () {
+        $(this).closest(".comment").children(".comment_reply").fadeToggle("medium", function () {
             if ($(this).is(":visible")) {
                 link.text("Hide");
             } else {
-                link.text("Reply");
+                link.text("Show");
             }
         });
     })
@@ -15,29 +15,30 @@ $(document).ready(function () {
     // Edit comment
     $(".comment-edit-btn").click(function (event) {
         event.preventDefault();
-        $(this).parent().parent().toggle("slow");
-        var content = $(this).parent().parent().children("p").text();
-        var edit_form_div = $(this).parent().parent().next(".comment-edited");
-        edit_form_div.toggle("slow");
-        var input = edit_form_div.children("form").children("#div_id_content").children(".controls").children("#id_content");
+        var commentDiv = $(this).closest(".comment-not-edited");
+        var editDiv = commentDiv.next(".comment-edited");
+        commentDiv.toggle("medium");
+        editDiv.toggle("medium");
+        var content = commentDiv.find(".panel-body").text();
+        var input = editDiv.find("#id_content");
         input.val(content);
         input.focus();
     })
 
     $("form.comment-edit").on('submit', function (event) {
         event.preventDefault();
-        var comment_content = $(this).children("#div_id_content").children(".controls").children("#id_content").val();
+        var comment_content = $(this).find("#id_content").val();
         if (comment_content == "") {
             console.log("Content is empty. Validation error.")
             $(this).children("#comment-content-validation-message").show();
-            $(this).children("#div_id_content").children(".controls").children("#id_content").focus();
+            $(this).find("#id_content").focus();
             return;
         }
         console.log("Editing comment with ajax request");
         var comment_id = $(this).children("[name='comment_id']").val();
         edit_comment(comment_id, comment_content)
-        $(this).toggle("slow");
-        $(this).parent().prev(".comment-not-edited").toggle("slow");
+        $(this).toggle("medium");
+        $(this).parent().prev(".comment-not-edited").toggle("medium");
     })
 
     function edit_comment(comment_id, content) {
@@ -54,7 +55,7 @@ $(document).ready(function () {
                 console.log(json.is_success)
                 if (json.is_success == true) {
                     console.log("id = " + json.comment_id + ", new content = " + json.comment_content);
-                    $("div#" + json.comment_id).children("blockquote").children("div.comment-not-edited").children("p").text(json.comment_content)
+                    $("div#" + json.comment_id).find(".panel-body").text(json.comment_content)
                 }
             },
 

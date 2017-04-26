@@ -21,6 +21,8 @@ from allauth.socialaccount.models import SocialAccount
 import hashlib
 #
 
+from django.templatetags.static import static # for access to static files
+
 # Create your models here.
 
 
@@ -122,7 +124,7 @@ class UserProfile(models.Model):
         if len(fb_uid):
             return "http://graph.facebook.com/{}/picture?width=100&height=100".format(fb_uid[0].uid)
 
-        return "http://www.gravatar.com/avatar/{}?s=100".format(hashlib.md5(self.user.email).hexdigest())
+        return static('img/user.png')
 
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])

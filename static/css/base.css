@@ -30,21 +30,6 @@ html, body {
     display: block;
 }
 
-li {
-    margin-right: 1.8em;
-    display: list-item;
-    float: left;
-    padding-left: 0.3em;
-}
-
-li a {
-    color: #000;
-}
-
-li a:hover {
-    color: #333;
-}
-
 h1 {
     color: #444;
 }
@@ -150,34 +135,58 @@ a:hover {
 }
 
 .thumbnail {
-    padding:0px;
+    padding: 0px;
 }
+
 .panel {
-	position:relative;
+    position: relative;
 }
-.panel>.panel-heading:after,.panel>.panel-heading:before{
-	position:absolute;
-	top:11px;left:-16px;
-	right:100%;
-	width:0;
-	height:0;
-	display:block;
-	content:" ";
-	border-color:transparent;
-	border-style:solid solid outset;
-	pointer-events:none;
+
+.panel > .panel-heading:after, .panel > .panel-heading:before {
+    position: absolute;
+    top: 11px;
+    left: -16px;
+    right: 100%;
+    width: 0;
+    height: 0;
+    display: block;
+    content: " ";
+    border-color: transparent;
+    border-style: solid solid outset;
+    pointer-events: none;
 }
-.panel>.panel-heading:after{
-	border-width:7px;
-	border-right-color:#f7f7f7;
-	margin-top:1px;
-	margin-left:2px;
+
+.panel > .panel-heading:after {
+    border-width: 7px;
+    border-right-color: #f7f7f7;
+    margin-top: 1px;
+    margin-left: 2px;
 }
-.panel>.panel-heading:before{
-	border-right-color:#ddd;
-	border-width:8px;
+
+.panel > .panel-heading:before {
+    border-right-color: #ddd;
+    border-width: 8px;
 }
 
 .overflow-break-word {
-    overflow-wrap:break-word;
+    overflow-wrap: break-word;
+}
+
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.padding15 {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.margin-bottom15 {
+    margin-bottom: 15px !important;
+}
+
+.underlined {
+    width: 50%;
+    border-bottom: 1px solid #f16c20;
 }

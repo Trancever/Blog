@@ -25,10 +25,11 @@
     {% endblock head_extra %}
 
     <link rel="stylesheet" href="{% static "css/base.css" %}"/>
+    <link rel="stylesheet" href="{% static "css/blog.css" %}"
 </head>
 <body>
 
-{% include "messages_display.html" %}
+{% include 'navbar.html' %}
 
 <div class="container">
     {% block content %}
@@ -39,18 +40,7 @@
 <br/><br/><br/>
 
 {% block footer %}
-    <footer class="footer">
-        <div class="container">Copyright © Dawid Urbaniak
-            <ul class="float-right">
-                <li>
-                    <a href="#">O autorze</a>
-                </li>
-                <li>
-                    <a href="#">Kontakt</a>
-                </li>
-            </ul>
-        </div>
-    </footer>
+    {% include 'footer.html' %}
 {% endblock footer %}
 
 
