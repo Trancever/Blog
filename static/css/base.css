@@ -8,6 +8,10 @@ html, body {
     padding: 0;
 }
 
+.white-content {
+    background-color: white;
+}
+
 .footer {
     position: absolute;
     left: 0;
@@ -189,4 +193,14 @@ a:hover {
 .underlined {
     width: 50%;
     border-bottom: 1px solid #f16c20;
+}
+
+.oranged {
+    color: #f16c20;
+}
+
+.comment-thumbnail {
+    -webkit-box-shadow: 5px 5px 2px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 5px 5px 2px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 5px 5px 2px 0px rgba(0, 0, 0, 0.75);
 }

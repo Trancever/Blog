@@ -25,18 +25,19 @@
                     <div class="col-sm-12">
                         <div class="thumbnail">
                             {% if object.image %}
-                                <img src="{{ object.image.url }}" class="img-responsive">
+                                <a href="{{ object.get_absolute_url }}">
+                                    <img src="{{ object.image.url }}" class="img-responsive">
+                                </a>
                             {% endif %}
                             <div class="caption post-detail-item">
                                 {% if object.draft %}<h3 style="color:red;">Draft {% if object.publish > today %}Future
                                     Post{% endif %}</h3>{% endif %}
-                                <h3><a href="{{ object.get_absolute_url }}">{{ object.title }}
-                                    <small>{{ object.publish }} ago
+                                <h2><a class="oranged" href="{{ object.get_absolute_url }}">{{ object.title }}
+                                    <small>{{ object.publish }}
                                     </small>
-                                </a></h3>
+                                </a></h2>
                                 {{ object.get_markdown|truncatechars_html:150 }}
-                                <p><a href="{{ object.get_absolute_url }}" class="btn btn-primary"
-                                      role="button">Show</a>
+                                <p><a style="font-size: 18px;" href="{{ object.get_absolute_url }}">Czytaj więcej..</a>
                                 </p>
                             </div>
                         </div>
@@ -72,10 +73,11 @@
 
         <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
             <div class="sidebar-module sidebar-module-inset">
-                <h3 class="underlined">About</h3>
-                <p>Czesc! Nazywam sie Dawid Urbaniak, jestem junior programista, studiuje informatyke na
-                    politechnice lodzkiej, zawodowo programuje w c++. W niedalekiej przyszlosci mam zamiar zaczac
-                    przygode z programowaniem webowym.</p>
+                <h3 class="underlined">O mnie</h3>
+                <p>Cześć! Nazywam sie Dawid, jestem junior programistą, studiuję informatykę na
+                    politechnice łódzkiej, zawodowo programuję w C++. W niedalekiej przyszłości mam zamiar zacząć
+                    przygodę z programowaniem webowym. Pierwszym krokiem było napisanie tego bloga przy użyciu
+                    frameworku "Django".</p>
             </div>
             <div class="sidebar-module">
                 <h3 class="underlined">Archiwa</h3>
@@ -97,7 +99,7 @@
             <div class="sidebar-module">
                 <h3 class="underlined">Linki</h3>
                 <ol class="list-unstyled">
-                    <li><a href="#">GitHub</a></li>
+                    <li><a href="https://github.com/Trancever">GitHub</a></li>
                     <li><a href="https://www.linkedin.com/in/dawid-urbaniak-a21940127/">Linkedin</a></li>
                 </ol>
             </div>

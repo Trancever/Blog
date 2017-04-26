@@ -12,21 +12,24 @@
 </style>
 
 {% block content %}
-    <div class="col-sm-10 col-sm-offset-1">
+    <div class="col-sm-8">
         {% if object.image %}
             <img src="{{ object.image.url }}" class="img-responsive">
+            <br/>
         {% endif %}
-        <h1>{{ object.title }}
-            <small>{% if object.draft %}<span style="color:red;">Draft</span>{% endif %} {{ object.publish }}</small>
-        </h1>
-        {% if user == object.user %}
-            <button type="button" class="link float-right" data-toggle="modal" data-target="#myModal">Delete this post
-            </button>
-        {% endif %}
-        <p>Author: {{ object.user }}</p>
+        <h1 class="oranged">{{ object.title }}</h1>
+        <h2>
+            <small>{% if object.draft %}<span style="color:red;">Draft</span>{% endif %} {{ object.publish }}
+                <small>by {{ object.user.get_full_name }}        {% if user == object.user %}
+                    <button type="button" style="display: inline;" class="link float-right" data-toggle="modal"
+                            data-target="#myModal">Delete this post
+                    </button>
+                {% endif %}</small>
+            </small>
+        </h2>
 
         </hr>
-        <div class="thumbnail post-detail-item">{{ object.get_markdown }}</br>
+        <div class="post-detail-item">{{ object.get_markdown }}</br>
         </div>
         </hr>
         <p>
@@ -169,6 +172,40 @@
 
         </div>
     </div>
+
+    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+        <div class="sidebar-module sidebar-module-inset">
+            <h3 class="underlined">O mnie</h3>
+            <p>Cześć! Nazywam sie Dawid, jestem junior programistą, studiuję informatykę na
+                politechnice łódzkiej, zawodowo programuję w C++. W niedalekiej przyszłości mam zamiar zacząć
+                przygodę z programowaniem webowym. Pierwszym krokiem było napisanie tego bloga przy użyciu
+                frameworku "Django".</p>
+        </div>
+        <div class="sidebar-module">
+            <h3 class="underlined">Archiwa</h3>
+            <ol class="list-unstyled">
+                <li><a href="#">March 2014</a></li>
+                <li><a href="#">February 2014</a></li>
+                <li><a href="#">January 2014</a></li>
+                <li><a href="#">December 2013</a></li>
+                <li><a href="#">November 2013</a></li>
+                <li><a href="#">October 2013</a></li>
+                <li><a href="#">September 2013</a></li>
+                <li><a href="#">August 2013</a></li>
+                <li><a href="#">July 2013</a></li>
+                <li><a href="#">June 2013</a></li>
+                <li><a href="#">May 2013</a></li>
+                <li><a href="#">April 2013</a></li>
+            </ol>
+        </div>
+        <div class="sidebar-module">
+            <h3 class="underlined">Linki</h3>
+            <ol class="list-unstyled">
+                <li><a href="https://github.com/Trancever">GitHub</a></li>
+                <li><a href="https://www.linkedin.com/in/dawid-urbaniak-a21940127/">Linkedin</a></li>
+            </ol>
+        </div>
+    </div><!-- /.blog-sidebar -->
 
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
