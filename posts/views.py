@@ -117,7 +117,7 @@ def posts_list(request):
             Q(user__username__icontains=query)
         ).distinct()
 
-    paginator = Paginator(queryset_list, 10)  # Show 10 contacts per page
+    paginator = Paginator(queryset_list, 5)  # Show 10 contacts per page
     page_request_var = "page"
     page = request.GET.get(page_request_var)
     try:

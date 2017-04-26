@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% load times %}
 {% block content %}
 
     <div class="row">
@@ -43,23 +44,29 @@
                 </div>
             {% endfor %}
 
-            <div class="pagination">
-        <span class="step-links">
-        {% if objects_list.has_previous %}
-            <a href="?{{ page_request_var }}={{ objects_list.previous_page_number }}
-                {% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">previous</a>
-        {% endif %}
-
-            <span class="current">
-            Page {{ objects_list.number }} of {{ objects_list.paginator.num_pages }}.
-        </span>
-
-            {% if objects_list.has_next %}
-                <a href="?{{ page_request_var }}={{ objects_list.next_page_number }}
-            {% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">next</a>
-            {% endif %}
-        </span>
-            </div>
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    {% if objects_list.has_previous %}
+                        <li>
+                            <a href="?{{ page_request_var }}={{ objects_list.previous_page_number }}
+                            {% if request.GET.query %}&page={{ request.GET.query }}{% endif %}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% for page in objects_list.paginator.num_pages|times %}
+                        <li><a href="?page={{ page }}">{{ page }}</a></li>
+                    {% endfor %}
+                    {% if objects_list.has_next %}
+                        <li>
+                            <a href="?{{ page_request_var }}={{ objects_list.next_page_number }}
+                {% if request.GET.query %}&page={{ request.GET.query }}{% endif %}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
 
         </div>
 
