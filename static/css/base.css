@@ -13,13 +13,14 @@ html, body {
 }
 
 .footer {
-    position: absolute;
+    clear: both;
+    position: relative;
     left: 0;
     right: 0;
     bottom: 0;
     padding-top: 10px;
     padding-bottom: 0px;
-    margin-top: 50px;
+    margin-top: -3em;
     background-color: #EEEEEE;
     font-family: 'Open Sans Condensed';
 }
@@ -107,6 +108,7 @@ span.btn-group {
 .login-jumbotron {
     margin-top: 40px;
     padding-top: 20px;
+    background-color: #CCC;
 }
 
 .remember-forgot-section {
