@@ -4,7 +4,7 @@
 {% block content %}
 
     <div class="row">
-        <div class="post-module margin-top-15">
+        <div class="white-box margin-top-15">
             <h1 class="blog-title underlined">Dawid Urbaniak</h1>
             <p class="lead blog-description">Blog programistyczny dla kazdego!</p>
             <form method="GET" action="" class="form-inline">
@@ -23,9 +23,8 @@
         <div class="col-sm-8">
 
             {% for object in objects_list %}
-                <div class="row post-module">
-                    <div class="col-sm-12 padding-top15">
-                        {#                        <div class="thumbnail">#}
+                <div class="row white-box">
+                    <div class="col-sm-12 padding-top-15">
                         {% if object.image %}
                             <a href="{{ object.get_absolute_url }}">
                                 <img src="{{ object.image.url }}" class="img-responsive">
@@ -34,7 +33,7 @@
                         <div class="caption post-detail-item">
                             {% if object.draft %}<h3 style="color:red;">Draft {% if object.publish > today %}Future
                                 Post{% endif %}</h3>{% endif %}
-                            <h2 class="padding-top15"><a class="oranged" href="{{ object.get_absolute_url }}">{{ object.title }}
+                            <h2 class="padding-top-15"><a class="oranged" href="{{ object.get_absolute_url }}">{{ object.title }}
                                 <small>{{ object.publish }}
                                 </small>
                             </a></h2>
@@ -42,7 +41,6 @@
                             <p><a style="font-size: 18px;" href="{{ object.get_absolute_url }}">Czytaj więcej..</a>
                             </p>
                         </div>
-                        {#                        </div>#}
                     </div>
                 </div>
                 <br/>
@@ -76,7 +74,7 @@
         </div>
 
         <div class="col-sm-3 col-sm-offset-1">
-            <div class="sidebar-module post-module">
+            <div class="sidebar-module white-box">
                 <h3 class="underlined">O mnie</h3>
                 <p>Cześć! Nazywam sie Dawid, jestem junior programistą, studiuję informatykę na
                     politechnice łódzkiej, zawodowo programuję w C++. W niedalekiej przyszłości mam zamiar zacząć
@@ -85,7 +83,7 @@
             </div>
             <div class="sidebar-module">
                 <h3 class="underlined">Archiwa</h3>
-                <ol class="list-unstyled">
+                <ol class="sidebar-list">
                     <li><a href="#">March 2014</a></li>
                     <li><a href="#">February 2014</a></li>
                     <li><a href="#">January 2014</a></li>
@@ -102,7 +100,7 @@
             </div>
             <div class="sidebar-module">
                 <h3 class="underlined">Linki</h3>
-                <ol class="list-unstyled">
+                <ol class="sidebar-list">
                     <li><a href="https://github.com/Trancever">GitHub</a></li>
                     <li><a href="https://www.linkedin.com/in/dawid-urbaniak-a21940127/">Linkedin</a></li>
                 </ol>

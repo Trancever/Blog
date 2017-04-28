@@ -14,8 +14,8 @@
 {% block content %}
     <div class="row margin-top-15">
         <div class="col-sm-8">
-            <div class="post-module">
-                <div class="post-module">
+            <div class="white-box">
+                <div class="white-box">
                     {% if object.image %}
                         <img src="{{ object.image.url }}" class="img-responsive">
                         <br/>
@@ -25,7 +25,7 @@
                         <small>{% if object.draft %}
                             <span style="color:red;">Draft</span>{% endif %} {{ object.publish }}
                             <small>by {{ object.user.get_full_name }}        {% if user == object.user %}
-                                <button type="button" style="display: inline;" class="link float-right"
+                                <button type="button" style="display: inline;" class="link pull-right"
                                         data-toggle="modal"
                                         data-target="#myModal">Delete this post
                                 </button>
@@ -45,7 +45,7 @@
             </div>
             </br>
             <div class="">
-                <div class="padding15">
+                <div class="padding-sides-15">
                     <p class="lead">Comments</p>
                     <form method="POST" action="." class="comment-create">{% csrf_token %}
                         {{ comment_form|crispy }}
@@ -141,7 +141,7 @@
                                                         </div><!-- /panel panel-default -->
                                                     </div>
                                                     <div>
-                                                        <div class="comment-edited padding15" style="display: none">
+                                                        <div class="comment-edited padding-sides-15" style="display: none">
                                                             <form method="POST" action="."
                                                                   class="comment-edit">{% csrf_token %}
                                                                 {{ comment_form|crispy }}
@@ -158,7 +158,7 @@
                                                 </div>
                                             {% endfor %}
                                             <form method="POST" action="."
-                                                  class="comment-create padding15">{% csrf_token %}
+                                                  class="comment-create padding-sides-15">{% csrf_token %}
                                                 {{ comment_form|crispy }}
                                                 <input type="hidden" name="parent_id" value="{{ comment.id }}">
                                                 <input id="comment-user-validator" type="hidden"
@@ -187,7 +187,7 @@
         </div>
 
         <div class="col-sm-3 col-sm-offset-1">
-            <div class="sidebar-module post-module">
+            <div class="sidebar-module white-box">
                 <h3 class="underlined">O mnie</h3>
                 <p>Cześć! Nazywam sie Dawid, jestem junior programistą, studiuję informatykę na
                     politechnice łódzkiej, zawodowo programuję w C++. W niedalekiej przyszłości mam zamiar zacząć
@@ -196,7 +196,7 @@
             </div>
             <div class="sidebar-module">
                 <h3 class="underlined">Archiwa</h3>
-                <ol class="list-unstyled">
+                <ol class="sidebar-list">
                     <li><a href="#">March 2014</a></li>
                     <li><a href="#">February 2014</a></li>
                     <li><a href="#">January 2014</a></li>
@@ -213,7 +213,7 @@
             </div>
             <div class="sidebar-module">
                 <h3 class="underlined">Linki</h3>
-                <ol class="list-unstyled">
+                <ol class="sidebar-list">
                     <li><a href="https://github.com/Trancever">GitHub</a></li>
                     <li><a href="https://www.linkedin.com/in/dawid-urbaniak-a21940127/">Linkedin</a></li>
                 </ol>
