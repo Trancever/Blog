@@ -28,7 +28,6 @@ urlpatterns = [
     url(r'^accounts/logout/$', logout, {'next_page': '/'}),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^api/posts/', include("posts.api.urls", namespace="posts-api")),
-    # url(r'^$', index, name="home_page"),
 ]
 
 if settings.DEBUG:
