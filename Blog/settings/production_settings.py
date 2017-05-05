@@ -24,7 +24,7 @@ SECRET_KEY = '7m5a^li9_1-@3pqo^y&d@1+a$g&uuq=v)%p)pox9!n&$w7^$52'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['dawidurbaniak.pl']
 
 # Application definition
 
@@ -111,11 +111,11 @@ WSGI_APPLICATION = 'Blog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'blog.db',
-        'USER': 'trance',
+        'NAME': 'trancever_baza',
+        'USER': 'trancever',
         'PASSWORD': 'Dawidek123',
-        'HOST': 'localhost',
-        'PORT': '',
+        'HOST': 'pgsql',
+        'PORT': '5432',
     }
 }
 
@@ -158,7 +158,6 @@ MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
-    # '/var/www/static/',
 ]
 
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn")
