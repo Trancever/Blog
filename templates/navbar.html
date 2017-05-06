@@ -5,10 +5,13 @@
             <a class="blog-nav-item" href="#">Contact</a>
             <a class="blog-nav-item" href="#">About</a>
             {% if not user.is_authenticated %}
-            <a class="blog-nav-item pull-right" href="{% url 'account_signup' %}">Register</a>
-            <a class="blog-nav-item pull-right" href="{% url 'account_login' %}">Login</a>
+                <a class="blog-nav-item pull-right" href="{% url 'account_signup' %}">Zarejestruj</a>
+                <a class="blog-nav-item pull-right" href="{% url 'account_login' %}">Zaloguj</a>
             {% else %}
-            <a class="blog-nav-item pull-right" href="{% url 'account_logout' %}">Logout</a>
+                <a class="blog-nav-item pull-right" href="{% url 'account_logout' %}">Wyloguj</a>
+                <a class="blog-nav-item pull-right" href="#">Zalogowany jako:
+                    {% if request.user.get_full_name %}{{ request.user.get_full_name }}{% else %}
+                        {{ request.user }}{% endif %}</a>
             {% endif %}
         </nav>
     </div>

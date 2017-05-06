@@ -42,7 +42,7 @@ def posts_detail(request, slug=None):
     if request.POST.get("post_title") is not None:
         instance.delete()
         messages.success(request, "Post successfully deleted")
-        return HttpResponseRedirect("/posts/")
+        return HttpResponseRedirect("/")
 
     # Deleting comment
     try:
