@@ -1,16 +1,16 @@
 {% load crispy_forms_tags %}
 
 <div class="padding-sides-15">
-    <p class="lead">Comments</p>
+    <p class="lead">Komentarze</p>
     <form method="POST" action="." class="comment-create">{% csrf_token %}
         {{ comment_form|crispy }}
         <input id="comment-user-validator" type="hidden" value="{{ user.is_authenticated }}">
         <div id="comment-content-validation-message" class="validation-message">
-            <p>You have to be logged in to post comments. </p>
-            <p class="black-color"><a href="{% url "account_login" %}">Sign in </a>or <a
-                    href="{% url "account_signup" %}">Sign up </a>if you don't have an account yet.</p>
+            <p>Musisz być zalogowany aby dodawać komentarze.</p>
+            <p class="black-color"><a href="{% url "account_login" %}">Zaloguj </a>lub <a
+                    href="{% url "account_signup" %}">zarejestruj </a>się jeśli nie masz jeszcze konta.</p>
         </div>
-        <button class="btn btn-default">Comment</button>
+        <button class="btn btn-default">Opublikuj</button>
     </form>
     <br/>
     <br/>
@@ -33,15 +33,15 @@
                                         {{ comment.user.get_full_name }}{% else %}
                                         {{ comment.user }}{% endif %}</strong>
                                 <span class="text-muted">{{ comment.updated|timesince }} ago | {{ comment.children.count }}
-                                Repl{% if comment.children.count > 1 %}ies{% else %}y{% endif %} | <a href="#"
-                                                                                                      class="comment-reply-btn">Show</a>
+                                Odpowied{% if comment.children.count > 1 or comment.children.count == 0 %}zi{% else %}ź{% endif %} | <a href="#"
+                                                                                                         class="comment-reply-btn">Pokaż</a>
                                     {% if user == comment.user %} |
-                                        <a href="#" class="comment-edit-btn">Edit</a> |
+                                        <a href="#" class="comment-edit-btn">Edytuj</a> |
                                         <form method="POST" action="." class="comment-delete"
                                               style="display: inline;">
                                             {% csrf_token %}
                                             <input type="hidden" name="comment_id" value="{{ comment.id }}">
-                                            <button type="submit" class="link">Delete</button>
+                                            <button type="submit" class="link">Usuń</button>
                                         </form>
                                     {% endif %}
                                     </span>
@@ -57,8 +57,8 @@
                         {{ comment_form|crispy }}
                         <input type="hidden" name="comment_id" value="{{ comment.id }}">
                         <p id="comment-content-validation-message"
-                           class="validation-message">Comment content can't be empty.</p>
-                        <button type="submit" class="btn btn-default margin-bottom-15">Save</button>
+                           class="validation-message">Komentarz nie może być pusty.</p>
+                        <button type="submit" class="btn btn-default margin-bottom-15">Zapisz</button>
                     </form>
                 </div>
                 <div class="comment_reply" style="display: none;">
@@ -78,18 +78,17 @@
                                                     <strong>{% if child.user.get_full_name %}
                                                         {{ child.user.get_full_name }}{% else %}
                                                         {{ child.user }}{% endif %}</strong>
-                                                    <span class="text-muted">{{ child.updated|timesince }} ago | {{ child.children.count }}
-                                Repl{% if child.children.count > 1 %}ies{% else %}y{% endif %}
+                                                    <span class="text-muted">{{ child.updated|timesince }} ago
                                                         {% if user == child.user %} |
                                                             <a href="#"
-                                                               class="comment-edit-btn">Edit</a> |
+                                                               class="comment-edit-btn">Edytuj</a> |
                                                             <form method="POST" action="."
                                                                   class="comment-delete"
                                                                   style="display: inline;">
                                                                 {% csrf_token %}
                                                                 <input type="hidden" name="comment_id"
                                                                        value="{{ child.id }}">
-                                                                <button type="submit" class="link">Delete</button>
+                                                                <button type="submit" class="link">Usuń</button>
                                                                 </form>
                                                         {% endif %}
                                                         </span>
@@ -108,10 +107,8 @@
                                             <input type="hidden" name="comment_id"
                                                    value="{{ child.id }}">
                                             <p id="comment-content-validation-message"
-                                               class="validation-message">Comment content can't
-                                                be
-                                                empty.</p>
-                                            <button type="submit" class="btn btn-default margin-bottom-15">Save
+                                               class="validation-message">Komentarz nie może być pusty.</p>
+                                            <button type="submit" class="btn btn-default margin-bottom-15">Zapisz
                                             </button>
                                         </form>
                                     </div>
@@ -124,16 +121,12 @@
                                 <input id="comment-user-validator" type="hidden"
                                        value="{{ user.is_authenticated }}">
                                 <div id="comment-content-validation-message" class="validation-message">
-                                    <p>You have to be logged in to post comments. </p>
-                                    <p class="black-color"><a href="{% url "account_login" %}">Sign
-                                        in </a>or
-                                        <a
-                                                href="{% url "account_signup" %}">Sign up </a>if you
-                                        don't
-                                        have an
-                                        account yet.</p>
+                                    <p>Musisz być zalogowany aby dodawać komentarze. </p>
+                                    <p class="black-color"><a href="{% url "account_login" %}">Zaloguj </a>lub <a
+                                            href="{% url "account_signup" %}">zarejestruj się </a>jeśli nie masz jeszcze
+                                        konta.</p>
                                 </div>
-                                <button type="submit" class="btn btn-default">Reply</button>
+                                <button type="submit" class="btn btn-default">Odpowiedz</button>
                             </form>
                         </div><!-- /col-sm-10 -->
                     </div>

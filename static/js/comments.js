@@ -5,9 +5,9 @@ $(document).ready(function () {
         console.log("reply link clicked")
         $(this).closest(".comment").children(".comment_reply").fadeToggle("medium", function () {
             if ($(this).is(":visible")) {
-                link.text("Hide");
+                link.text("Schowaj");
             } else {
-                link.text("Show");
+                link.text("Pokaż");
             }
         });
     })

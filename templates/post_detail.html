@@ -26,7 +26,7 @@
                             <small>by {{ object.user.get_full_name }}        {% if user == object.user %}
                                 <button type="button" style="display: inline;" class="link pull-right"
                                         data-toggle="modal"
-                                        data-target="#myModal">Delete this post
+                                        data-target="#myModal">Usuń ten post
                                 </button>
                             {% endif %}</small>
                         </small>
@@ -36,10 +36,6 @@
                     <div class="post-detail-item">{{ object.get_markdown }}</div>
                     </br>
                     </hr>
-                    {#        <p>#}
-                    {#        <div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="button_count"#}
-                    {#             data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>#}
-                    {#        </p>#}
                 </div>
             </div>
             </br>
@@ -60,7 +56,7 @@
             <div class="modal-content">
                 <div class="center modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Do you really want to delete this post?</h4>
+                    <h4 class="modal-title">Na pewno chcesz usunąć ten post?</h4>
                 </div>
                 <div class="modal-body">
                     <div class="header center">{{ object.title }}</div>
@@ -68,9 +64,9 @@
                 <div class="modal-footer">
                     <form method="POST" action=".">
                         {% csrf_token %}
-                        <input type="SUBMIT" class="btn btn-warning" value="Delete">
+                        <input type="SUBMIT" class="btn btn-warning" value="Usuń">
                         <input type="hidden" name="post_title" value="{{ object.title }}">
-                        <a href="{{ object.get_absolute_url }}" class="btn btn-default">Cancel</a>
+                        <a href="{{ object.get_absolute_url }}" class="btn btn-default">Cofnij</a>
                     </form>
                 </div>
             </div>

@@ -3,15 +3,15 @@
 
 {% load i18n %}
 
-{% block head_title %}{% trans "Signup" %}{% endblock %}
+{% block head_title %}{% trans "Rejestracja | Dawid Urbaniak" %}{% endblock %}
 
 {% block content %}
     <div class="col-sm-offset-2 col-sm-8">
         <div class="jumbotron login-jumbotron">
-            <h2 class="center">{% trans "Sign Up" %}</h2>
+            <h2 class="center">{% trans "Rejestracja" %}</h2>
 
-            <div class="header center">{% blocktrans %}Already have an account? Then please <a
-                    href="{{ login_url }}">sign in</a>.{% endblocktrans %}</div>
+            <div class="header center">{% blocktrans %}Masz już konto?
+                <a href="{{ login_url }}">Zaloguj się</a>.{% endblocktrans %}</div>
 
             <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
                 {% csrf_token %}
@@ -21,7 +21,7 @@
                 {% endif %}
                 <br/>
                 <button class="sign-in-button center btn btn-primary"
-                        type="submit">{% trans "Sign Up" %} &raquo;</button>
+                        type="submit">{% trans "Zarejestruj" %} &raquo;</button>
             </form>
         </div>
     </div>

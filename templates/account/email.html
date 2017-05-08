@@ -7,9 +7,9 @@
 {% block content %}
     <div class="col-sm-offset-2 col-sm-8">
         <div class="jumbotron login-jumbotron">
-            <h2 class="center">{% trans "E-mail Addresses" %}</h2>
+            <h2 class="center">{% trans "Adresy e-mail" %}</h2>
             {% if user.emailaddress_set.all %}
-                <div class="center header">{% trans 'The following e-mail addresses are associated with your account:' %}</div>
+                <div class="center header">{% trans 'Następujące adresy e-mail są związane z twoim kontem:' %}</div>
 
                 <form action="{% url 'account_email' %}" class="email_list" method="post">
                     {% csrf_token %}
@@ -26,23 +26,23 @@
 
                                     {{ emailaddress.email }}
                                     {% if emailaddress.verified %}
-                                        <span class="verified">{% trans "Verified" %}</span>
+                                        <span class="verified">{% trans "Zweryfikowany" %}</span>
                                     {% else %}
-                                        <span class="unverified">{% trans "Unverified" %}</span>
+                                        <span class="unverified">{% trans "Niezweryfikowany" %}</span>
                                     {% endif %}
                                     {% if emailaddress.primary %}
-                                        <span class="primary">{% trans "Primary" %}</span>{% endif %}
+                                        <span class="primary">{% trans "Główny" %}</span>{% endif %}
                                 </label>
                             </div>
                         {% endfor %}
 
                         <div class="center buttonHolder">
                             <button class="btn btn-default secondaryAction" type="submit"
-                                    name="action_primary">{% trans 'Make Primary' %}</button>
+                                    name="action_primary">{% trans 'Zrób głównym' %}</button>
                             <button class="btn btn-default secondaryAction" type="submit"
-                                    name="action_send">{% trans 'Re-send Verification' %}</button>
+                                    name="action_send">{% trans 'Wyślji mail weryfikacyjny jeszcze raz' %}</button>
                             <button class="btn btn-default primaryAction" type="submit"
-                                    name="action_remove">{% trans 'Remove' %}</button>
+                                    name="action_remove">{% trans 'Usuń' %}</button>
                         </div>
 
                     </fieldset>
@@ -50,7 +50,7 @@
 
             {% else %}
                 <div class="center header">
-                    <strong>{% trans 'Warning:' %}</strong> {% trans "You currently do not have any e-mail address set up. You should really add an e-mail address so you can receive notifications, reset your password, etc." %}
+                    <strong>{% trans 'Ostrzeżenie:' %}</strong> {% trans "Aktualnie nie masz przypisanego żadnego adresu e-mail. Dzięki adresowi e-mail będziesz mógł resetować hasło, dostawać powiadomienia itp." %}
                 </div>
 
             {% endif %}

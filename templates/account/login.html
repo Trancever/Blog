@@ -14,7 +14,7 @@
             </a>
             {% include "socialaccount/snippets/login_extra.html" %}
 
-            <div class="header center">Or sign in directly</div>
+            <div class="header center">Lub zaloguj się bezpośrednio</div>
 
             <form class="login" method="POST" action="{% url 'account_login' %}">
                 {% csrf_token %}
@@ -22,12 +22,12 @@
                 {% if redirect_field_value %}
                     <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
                 {% endif %}
-                <a class="forgot" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-                <button class="btn btn-primary center sign-in-button" type="submit">{% trans "Sign In" %}</button>
+                <a class="forgot" href="{% url 'account_reset_password' %}">{% trans "Zapomniałeś hasła?" %}</a>
+                <button class="btn btn-primary center sign-in-button" type="submit">{% trans "Zaloguj się" %}</button>
             </form>
 
             <div class="footnote center">
-                Don't have an account? Login with Facebook above or <a href="{% url 'account_signup' %}">Sign Up</a>
+                Nie masz konta? Zaloguj się przez facebooka lub <a href="{% url 'account_signup' %}">zarejestruj się.</a>
             </div>
 
         </div>
