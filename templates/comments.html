@@ -52,7 +52,7 @@
                         </div><!-- /panel panel-default -->
                     </div>
                 </div><!-- /col-sm-10 -->
-                <div class="comment-edited" style="display:none;"> <!-- Edit comment form -->
+                <div class="comment-edited margin-bottom-15" style="display:none;"> <!-- Edit comment form -->
                     <form method="POST" action="." class="comment-edit">{% csrf_token %}
                         {{ comment_form|crispy }}
                         <input type="hidden" name="comment_id" value="{{ comment.id }}">
@@ -99,7 +99,7 @@
                                             </div><!-- /panel panel-default -->
                                         </div>
                                     </div>
-                                    <div class="comment-edited padding-sides-15"
+                                    <div class="comment-edited margin-bottom-15 padding-sides-15"
                                          style="display: none">
                                         <form method="POST" action="."
                                               class="comment-edit">{% csrf_token %}
@@ -115,7 +115,7 @@
                                 </div>
                             {% endfor %}
                             <form method="POST" action="."
-                                  class="comment-create padding-sides-15">{% csrf_token %}
+                                  class="comment-create margin-bottom-15 padding-sides-15">{% csrf_token %}
                                 {{ comment_form|crispy }}
                                 <input type="hidden" name="parent_id" value="{{ comment.id }}">
                                 <input id="comment-user-validator" type="hidden"
