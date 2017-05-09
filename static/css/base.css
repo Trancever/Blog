@@ -147,6 +147,20 @@ span.btn-group {
     overflow: hidden;
 }
 
+.linkedin {
+    background: url('/static/img/linkedin.png') no-repeat center top;
+    width: 115px;
+    height: 35px;
+    overflow: hidden;
+}
+
+.github {
+    background: url("/static/img/github.png") no-repeat center top;
+    width: 40px;
+    height: 10px;
+    overflow: hidden;
+}
+
 .header {
     font-size: 19px;
 }
@@ -268,7 +282,7 @@ a:hover {
 
 .sidebar-module-inset {
     padding: 15px;
-    background-color: #f5f5f5;
+    /*background-color: #f5f5f5;*/
     border-radius: 4px;
 }
 
@@ -307,16 +321,16 @@ a:hover {
  * Side bar list styles
  */
 
-.sidebar-list a {
-    color: gray;
-    font-size: 14px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
+/*.sidebar-list a {*/
+    /*color: gray;*/
+    /*font-size: 14px;*/
+    /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+/*}*/
 
 .sidebar-list li {
-    margin-bottom: 3px;
+    /*margin-bottom: 3px;*/
     list-style-type: none;
-    margin-left: -40px;
+    /*margin-left: -40px;*/
 }
 
 /*
