@@ -16,8 +16,9 @@ Including another URLconf
 """
 from django.conf.urls import url
 
-from .views import (contact_view)
+from .views import (contact_view, send_message)
 
 urlpatterns = [
     url(r'^message/$', contact_view, name="contact_view"),
+    url(r'^send/$', send_message, name="send_message"),
 ]

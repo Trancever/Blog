@@ -12,11 +12,13 @@
                 <button type="submit" class="btn btn-primary">Send message</button>
             </form>
         </div>
-        <div class="notification white-box">
+        <div class="notification white-box" style="display: none;">
             <h1 class="center margin-bottom-15">Message succesfully sent.</h1>
             <p class="center lead">Go to <a href="{% url "posts:list" %}">home</a> page.</p>
         </div>
     </div>
+
+    <div class="modal modal-loading"></div>
 
 {% endblock content %}
 
