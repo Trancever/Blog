@@ -1,14 +1,25 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% load crispy_forms_tags %}
 
 {% block content %}
     <div class="col-sm-10 col-sm-offset-1">
-        <h1 class="center margin-bottom-15">Send me a message.</h1>
-        <form method="POST" action=".">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <button type="submit" class="btn btn-primary">Send message</button>
-        </form>
+        <div class="form">
+            <h1 class="center margin-bottom-15">Send me a message.</h1>
+            <form id="message-form" method="POST" action=".">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary">Send message</button>
+            </form>
+        </div>
+        <div class="notification white-box">
+            <h1 class="center margin-bottom-15">Message succesfully sent.</h1>
+            <p class="center lead">Go to <a href="{% url "posts:list" %}">home</a> page.</p>
+        </div>
     </div>
 
 {% endblock content %}
+
+{% block scripts %}
+    <script src="{% static "js/email_notification.js" %}"></script>
+{% endblock scripts %}

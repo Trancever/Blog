@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     $(".comment-reply-btn").click(function (event) {
         var link = $(this);
         event.preventDefault();

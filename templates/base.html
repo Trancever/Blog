@@ -53,8 +53,10 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
 
-<script src="{% static "js/markdown.js" %}"></script>
-<script src="{% static "js/comments.js" %}"></script>
+{% block scripts %}
+    <script src="{% static "js/markdown.js" %}"></script>
+    <script src="{% static "js/comments.js" %}"></script>
+{% endblock scripts %}
 
 </body>
 </html>
