@@ -21,13 +21,16 @@ class PostCreateView(View):
     form_class = PostForm
     initial = {}
     template_name = "post_form.html"
+    context = {}
 
     def get(self, request, *args, **kwargs):
+        if not request.user.is_staff or not request.user.is_superuser:
+            raise Http404
+
         form = PostForm()
-        context = {
-            "form": form
-        }
-        return render(request, self.template_name, context)
+
+        self.context["form"] = form
+        return render(request, self.template_name, self.context)
 
     def post(self, request, *args, **kwargs):
         form = PostForm(request.POST or None, request.FILES or None)
@@ -37,10 +40,9 @@ class PostCreateView(View):
             instance.save()
             messages.success(request, "Successfully Created")
             return HttpResponseRedirect(instance.get_absolute_url())
-        context = {
-            "form": form
-        }
-        return render(request, self.template_name, context)
+
+        self.context["form"] = form
+        return render(request, self.template_name, self.context)
 
 
 def posts_detail(request, slug=None):
@@ -148,19 +150,33 @@ def posts_list(request):
     return render(request, "post_list.html", context_data)
 
 
-def posts_update(request, slug=None):
-    if not request.user.is_staff or not request.user.is_superuser:
-        raise Http404
-    instance = get_object_or_404(Post, slug=slug)
-    form = PostForm(request.POST or None, request.FILES or None, instance=instance)
-    if form.is_valid():
-        instance = form.save(commit=False)
-        instance.save()
-        messages.success(request, "Saved")
-        return HttpResponseRedirect(instance.get_absolute_url())
+class PostUpdateView(View):
+    form_class = PostForm
+    initial = {}
+    context = {}
+    template_name = "post_form.html"
 
-    context_data = {
-        "object": instance,
-        "form": form
-    }
-    return render(request, "post_form.html", context_data)
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_staff or not request.user.is_superuser:
+            raise Http404
+
+        instance = get_object_or_404(Post, slug=self.kwargs.get("slug", None))
+        form = PostForm(instance=instance)
+
+        self.context["form"] = form
+        self.context["instance"] = instance
+        return render(request, self.template_name, self.context)
+
+    def post(self, request, *args, **kwargs):
+        instance = get_object_or_404(Post, slug=self.kwargs.get("slug", None))
+        form = PostForm(request.POST or None, request.FILES or None, instance=instance)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.save()
+            messages.success(request, "Saved")
+            return HttpResponseRedirect(instance.get_absolute_url())
+
+        self.context["form"] = form
+        self.context["instance"] = instance
+        return render(request, self.template_name, self.context)
+
