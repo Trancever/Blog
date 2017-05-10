@@ -40,3 +40,7 @@ def send_message(request):
             return JsonResponse(response_data)
 
     return JsonResponse({})
+
+
+def about(request):
+    return render(request, "", {})

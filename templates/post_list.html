@@ -1,21 +1,30 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% load times %}
+{% load static %}
+
 {% block content %}
 
     <div class="row">
         <div class="white-box margin-top-15">
-            <h1 class="blog-title underlined">Dawid Urbaniak</h1>
-            <p class="lead blog-description">Kolejny blog programistyczny w sieci!</p>
-            <form method="GET" action="" class="form-inline">
-                <div class="form-group">
-                    <input type="text" class="form-control col-sm-3" name="query" placeholder="Search posts"
-                           value="{{ request.GET.query }}"/>
-                    <span class="input-group-btn">
+            <div class="row">
+                <div class="col-sm-7">
+                    <h1 class="blog-title underlined">Dawid Urbaniak</h1>
+                    <p class="lead blog-description">Kolejny blog programistyczny w sieci!</p>
+                    <form method="GET" action="" class="form-inline">
+                        <div class="form-group">
+                            <input type="text" class="form-control col-sm-3" name="query" placeholder="Search posts"
+                                   value="{{ request.GET.query }}"/>
+                            <span class="input-group-btn">
                     <button type="submit" class="btn btn-default">Search</button>
                 </span>
+                        </div>
+                    </form>
                 </div>
-            </form>
+                <div class="col-sm-5">
+                    <img class="img-responsive" src="{% static 'img/programming.jpg' %}">
+                </div>
+            </div>
         </div>
         </br>
         </br>
@@ -33,7 +42,8 @@
                         <div class="caption post-detail-item">
                             {% if object.draft %}<h3 style="color:red;">Draft {% if object.publish > today %}Future
                                 Post{% endif %}</h3>{% endif %}
-                            <h2 class="padding-top-15"><a class="oranged" href="{{ object.get_absolute_url }}">{{ object.title }}
+                            <h2 class="padding-top-15"><a class="dark-blue"
+                                                          href="{{ object.get_absolute_url }}">{{ object.title }}
                                 <small>{{ object.publish }}
                                 </small>
                             </a></h2>
@@ -73,7 +83,7 @@
 
         </div>
 
-    {% include "sidebar.html" %}
+        {% include "sidebar.html" %}
 
     </div>
 {% endblock content %}

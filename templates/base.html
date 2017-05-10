@@ -31,8 +31,11 @@
 </head>
 <body>
 
-{% include 'navbar.html' %}
-<div class="container">
+{% block navbar %}
+    {% include 'navbar.html' %}
+{% endblock navbar %}
+
+<div class="container margin-top-75">
     {% block content %}
 
     {% endblock content %}

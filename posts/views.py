@@ -6,6 +6,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
+from django.core.urlresolvers import reverse_lazy
 
 from comments.models import Comment
 from .models import Post
@@ -42,7 +43,7 @@ def posts_detail(request, slug=None):
     if request.POST.get("post_title") is not None:
         instance.delete()
         messages.success(request, "Post successfully deleted")
-        return HttpResponseRedirect("/")
+        return HttpResponseRedirect(reverse_lazy("posts:list"))
 
     # Deleting comment
     try:
