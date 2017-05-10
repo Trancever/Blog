@@ -1,6 +1,6 @@
 from urllib import quote_plus
 from django.http import HttpResponseRedirect, Http404
-from django.shortcuts import render, get_object_or_404, render_to_response
+from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
@@ -136,33 +136,15 @@ def posts_list(request):
     return render(request, "post_list.html", context_data)
 
 
-class PostUpdateView(View):
+class PostUpdateView(UserPassesTestMixin, UpdateView):
     form_class = PostForm
-    initial = {}
-    context = {}
     template_name = "post_form.html"
+    model = Post
+    login_url = "/"
 
-    def get(self, request, *args, **kwargs):
-        if not request.user.is_staff or not request.user.is_superuser:
-            raise Http404
+    def get_success_url(self):
+        return reverse("posts:detail", kwargs={"slug": self.object.slug})
 
-        instance = get_object_or_404(Post, slug=self.kwargs.get("slug", None))
-        form = PostForm(instance=instance)
-
-        self.context["form"] = form
-        self.context["instance"] = instance
-        return render(request, self.template_name, self.context)
-
-    def post(self, request, *args, **kwargs):
-        instance = get_object_or_404(Post, slug=self.kwargs.get("slug", None))
-        form = PostForm(request.POST or None, request.FILES or None, instance=instance)
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.save()
-            messages.success(request, "Saved")
-            return HttpResponseRedirect(instance.get_absolute_url())
-
-        self.context["form"] = form
-        self.context["instance"] = instance
-        return render(request, self.template_name, self.context)
+    def test_func(self):
+        return (self.request.user.is_superuser and self.request.user.is_staff)
 
