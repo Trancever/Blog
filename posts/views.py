@@ -1,14 +1,15 @@
 from urllib import quote_plus
-from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponseRedirect, Http404
+from django.shortcuts import render, get_object_or_404, render_to_response
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse_lazy, reverse
 from django.views.generic import View
-from django.views.generic.edit import FormView
+from django.views.generic.edit import CreateView, UpdateView
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 from comments.models import Comment
 from .models import Post
@@ -17,32 +18,17 @@ from comments.forms import CommentForm
 
 
 # Create your views here.
-class PostCreateView(View):
+class PostCreateView(UserPassesTestMixin, CreateView):
     form_class = PostForm
-    initial = {}
     template_name = "post_form.html"
-    context = {}
+    model = Post
+    login_url = "/"
 
-    def get(self, request, *args, **kwargs):
-        if not request.user.is_staff or not request.user.is_superuser:
-            raise Http404
+    def get_success_url(self):
+        return reverse("posts:detail", kwargs={"slug": self.object.slug})
 
-        form = PostForm()
-
-        self.context["form"] = form
-        return render(request, self.template_name, self.context)
-
-    def post(self, request, *args, **kwargs):
-        form = PostForm(request.POST or None, request.FILES or None)
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.user = request.user
-            instance.save()
-            messages.success(request, "Successfully Created")
-            return HttpResponseRedirect(instance.get_absolute_url())
-
-        self.context["form"] = form
-        return render(request, self.template_name, self.context)
+    def test_func(self):
+        return (self.request.user.is_superuser and self.request.user.is_staff)
 
 
 def posts_detail(request, slug=None):
