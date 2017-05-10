@@ -336,7 +336,7 @@ a:hover {
 /*
  * loading icon
  */
-.modal {
+.modal-loading {
     display: none;
     position: fixed;
     z-index: 1000;
