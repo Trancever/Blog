@@ -2,12 +2,57 @@ $(document).ready(function () {
 
     $("form#message-form").on("submit", function (event) {
         event.preventDefault();
+
+        let validationOK = true;
+        let validationElement = 0
+
         let fullname = $(this).find("#id_fullname").val();
+        if (fullname.length < 3) {
+            validationElement = $("#fullname-empty-error");
+            validationElement.show();
+            validationElement.prev(".controls").addClass("error");
+            validationOK = false;
+        } else {
+            validationElement = $("#fullname-empty-error");
+            validationElement.hide();
+            validationElement.prev(".controls").removeClass("error");
+        }
+
         let email = $(this).find("#id_email").val();
+        if (validateEmail(email) === false) {
+            validationElement = $("#email-wrong-format-error");
+            validationElement.show();
+            validationElement.prev(".controls").addClass("error");
+            validationOK = false;
+        } else {
+            validationElement = $("#email-wrong-format-error");
+            validationElement.hide();
+            validationElement.prev(".controls").removeClass("error");
+        }
+
         let message = $(this).find("#id_message").val();
+        if (message.length < 20) {
+            validationElement = $("#message-empty-error");
+            validationElement.show();
+            validationElement.prev(".controls").addClass("error");
+            validationOK = false;
+        } else {
+            validationElement = $("#message-empty-error");
+            validationElement.hide();
+            validationElement.prev(".controls").removeClass("error");
+        }
+
+        if (validationOK === false) {
+            return;
+        }
 
         send_message_via_ajax(fullname, email, message);
     });
+
+    function validateEmail(email) {
+        var re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        return re.test(email)
+    }
 
 
     function send_message_via_ajax(fullname, email, message) {
@@ -37,6 +82,16 @@ $(document).ready(function () {
             }
         });
     }
+
+    // Validating email form
+    function addErrors() {
+        $("#div_id_fullname").append("<p class='validation-message' style='display: none;' id='fullname-empty-error'>To pole musi zawierać przynajmniej 3 znaki.</p>");
+        $("#div_id_email").append("<p class='validation-message' style='display: none;' id='email-wrong-format-error'>Wprowadź adres e-mail o poprawnym formacie.</p>");
+        $("#div_id_message").append("<p class='validation-message' style='display: none;' id='message-empty-error'>To pole musi zawierać przynajmniej 20 znaków.</p>");
+    }
+
+    addErrors();
+
 });
 
 $(document).on({
