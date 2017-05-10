@@ -317,20 +317,8 @@ a:hover {
     margin-right: 5px;
 }
 
-/*
- * Side bar list styles
- */
-
-/*.sidebar-list a {*/
-    /*color: gray;*/
-    /*font-size: 14px;*/
-    /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
-/*}*/
-
 .sidebar-list li {
-    /*margin-bottom: 3px;*/
     list-style-type: none;
-    /*margin-left: -40px;*/
 }
 
 /*
