@@ -7,6 +7,8 @@ from django.db.models import Q
 from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse_lazy
+from django.views.generic import View
+from django.views.generic.edit import FormView
 
 from comments.models import Comment
 from .models import Post
@@ -15,22 +17,30 @@ from comments.forms import CommentForm
 
 
 # Create your views here.
+class PostCreateView(View):
+    form_class = PostForm
+    initial = {}
+    template_name = "post_form.html"
 
-def posts_create(request):
-    if not request.user.is_staff or not request.user.is_superuser:
-        raise Http404
-    form = PostForm(request.POST or None, request.FILES or None)
-    if form.is_valid():
-        instance = form.save(commit=False)
-        instance.user = request.user
-        instance.save()
-        messages.success(request, "Successfully Created")
-        return HttpResponseRedirect(instance.get_absolute_url())
+    def get(self, request, *args, **kwargs):
+        form = PostForm()
+        context = {
+            "form": form
+        }
+        return render(request, self.template_name, context)
 
-    context = {
-        "form": form
-    }
-    return render(request, "post_form.html", context)
+    def post(self, request, *args, **kwargs):
+        form = PostForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            messages.success(request, "Successfully Created")
+            return HttpResponseRedirect(instance.get_absolute_url())
+        context = {
+            "form": form
+        }
+        return render(request, self.template_name, context)
 
 
 def posts_detail(request, slug=None):
