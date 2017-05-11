@@ -22,7 +22,7 @@ class PostCreateView(UserPassesTestMixin, CreateView):
     form_class = PostForm
     template_name = "post_form.html"
     model = Post
-    login_url = "/"
+    login_url = reverse_lazy("posts:list")
 
     def get_success_url(self):
         return reverse("posts:detail", kwargs={"slug": self.object.slug})
@@ -31,73 +31,79 @@ class PostCreateView(UserPassesTestMixin, CreateView):
         return (self.request.user.is_superuser and self.request.user.is_staff)
 
 
-def posts_detail(request, slug=None):
-    instance = get_object_or_404(Post, slug=slug)
-    if instance.draft or instance.publish > timezone.now().date():
-        if not request.user.is_staff or not request.user.is_superuser:
-            raise Http404
-    share_string = quote_plus(instance.content)
+class PostDetailView(UserPassesTestMixin, View):
+    form_class = CommentForm
+    template_name = "post_detail.html"
+    login_url = reverse_lazy("posts:list")
 
-    if request.POST.get("post_title") is not None:
-        instance.delete()
-        messages.success(request, "Post successfully deleted")
-        return HttpResponseRedirect(reverse_lazy("posts:list"))
+    def dispatch(self, request, *args, **kwargs):
+        instance_slug = self.kwargs.get("slug")
+        self.instance = get_object_or_404(Post, slug=instance_slug)
+        return super(PostDetailView, self).dispatch(request, *args, **kwargs)
 
-    # Deleting comment
-    try:
-        comment_to_delete_id = int(request.POST.get("comment_id"))
-    except:
-        comment_to_delete_id = None
+    def test_func(self):
+        if self.instance.draft or self.instance.publish > timezone.now().date():
+            if not self.request.user.is_staff or not self.request.user.is_superuser:
+                return False
+        return True
 
-    if comment_to_delete_id is not None:
-        comment_qs = Comment.objects.filter(id=comment_to_delete_id)
-        if comment_qs.exists() and comment_qs.count() == 1:
-            comment_to_delete = comment_qs.first()
-            if comment_to_delete.children.count() != 0:
-                for child in comment_to_delete.children:
-                    child.delete()
-            comment_to_delete.delete()
-            return HttpResponseRedirect(instance.get_absolute_url())
+    def get(self, request, *args, **kwargs):
+        initial_data = {
+            "content_type": self.instance.get_content_type,
+            "object_id": self.instance.id,
+        }
+        comment_form = self.form_class(initial=initial_data)
+        context_data = {
+            "object": self.instance,
+            "comment_form": comment_form,
+        }
 
-    initial_data = {
-        "content_type": instance.get_content_type,
-        "object_id": instance.id,
-    }
+        return render(request, self.template_name, context_data)
 
-    # Adding comment
-    comment_form = CommentForm(request.POST or None, initial=initial_data)
-    if comment_form.is_valid():
-        c_type = comment_form.cleaned_data.get("content_type")
-        content_type = ContentType.objects.get(model=c_type)
-        object_id = comment_form.cleaned_data.get("object_id")
-        content = comment_form.cleaned_data.get("content")
+    def post(self, request, *args, **kwargs):
+        # Removing post
+        if request.POST.get('post_title') is not None:
+            self.instance.delete()
+            messages.success(request, "Post successfully deleted")
+            return HttpResponseRedirect(reverse_lazy("posts:list"))
 
-        parent_obj = None
-        try:
-            parent_id = int(request.POST.get("parent_id"))
-        except:
-            parent_id = None
+        initial_data = {
+            "content_type": self.instance.get_content_type,
+            "object_id": self.instance.id,
+        }
+        # Adding comment
+        comment_form = self.form_class(request.POST or None, initial=initial_data)
+        if comment_form.is_valid():
+            c_type = comment_form.cleaned_data.get("content_type")
+            content_type = ContentType.objects.get(model=c_type)
+            object_id = comment_form.cleaned_data.get("object_id")
+            content = comment_form.cleaned_data.get("content")
 
-        if parent_id is not None:
-            parent_qs = Comment.objects.filter(id=parent_id)
-            if parent_qs.exists() and parent_qs.count() == 1:
-                parent_obj = parent_qs.first()
+            parent_obj = None
+            try:
+                parent_id = int(request.POST.get("parent_id"))
+            except:
+                parent_id = None
 
-        new_comment, created = Comment.objects.get_or_create(
-            user=request.user,
-            content_type=content_type,
-            object_id=object_id,
-            content=content,
-            parent=parent_obj
-        )
-        return HttpResponseRedirect(new_comment.content_object.get_absolute_url())
+            if parent_id is not None:
+                parent_qs = Comment.objects.filter(id=parent_id)
+                if parent_qs.exists() and parent_qs.count() == 1:
+                    parent_obj = parent_qs.first()
 
-    context_data = {
-        "object": instance,
-        "share_string": share_string,
-        "comment_form": comment_form,
-    }
-    return render(request, "post_detail.html", context_data)
+            new_comment, created = Comment.objects.get_or_create(
+                user=request.user,
+                content_type=content_type,
+                object_id=object_id,
+                content=content,
+                parent=parent_obj
+            )
+            return HttpResponseRedirect(new_comment.content_object.get_absolute_url())
+
+        context_data = {
+            "object": self.instance,
+            "comment_form": comment_form,
+        }
+        return render(request, self.template_name, context_data)
 
 
 def posts_list(request):
@@ -140,11 +146,10 @@ class PostUpdateView(UserPassesTestMixin, UpdateView):
     form_class = PostForm
     template_name = "post_form.html"
     model = Post
-    login_url = "/"
+    login_url = reverse_lazy("posts:list")
 
     def get_success_url(self):
         return reverse("posts:detail", kwargs={"slug": self.object.slug})
 
     def test_func(self):
         return (self.request.user.is_superuser and self.request.user.is_staff)
-
