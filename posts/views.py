@@ -1,5 +1,4 @@
-from urllib import quote_plus
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -7,7 +6,7 @@ from django.db.models import Q
 from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse_lazy, reverse
-from django.views.generic import View
+from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import UserPassesTestMixin
 
@@ -31,7 +30,7 @@ class PostCreateView(UserPassesTestMixin, CreateView):
         return (self.request.user.is_superuser and self.request.user.is_staff)
 
 
-class PostDetailView(UserPassesTestMixin, View):
+class PostDetailView(UserPassesTestMixin, TemplateView):
     form_class = CommentForm
     template_name = "post_detail.html"
     login_url = reverse_lazy("posts:list")
@@ -106,40 +105,46 @@ class PostDetailView(UserPassesTestMixin, View):
         return render(request, self.template_name, context_data)
 
 
-def posts_list(request):
-    today = timezone.now().date()
-    queryset_list = Post.objects.active()
-    if request.user.is_staff or request.user.is_superuser:
-        queryset_list = Post.objects.all()
 
-    query = request.GET.get("query")
-    if query:
-        queryset_list = queryset_list.filter(
-            Q(title__icontains=query) |
-            Q(content__icontains=query) |
-            Q(user__first_name__icontains=query) |
-            Q(user__last_name__icontains=query) |
-            Q(user__username__icontains=query)
-        ).distinct()
+class PostsListView(TemplateView):
+    template_name = "post_list.html"
 
-    paginator = Paginator(queryset_list, 5)  # Show 10 contacts per page
-    page_request_var = "page"
-    page = request.GET.get(page_request_var)
-    try:
-        queryset = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        queryset = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        queryset = paginator.page(paginator.num_pages)
+    def get(self, request, *args, **kwargs):
+        if request.user.is_staff or request.user.is_superuser:
+            queryset_list = Post.objects.all()
+        else:
+            queryset_list = Post.objects.active()
 
-    context_data = {
-        "objects_list": queryset,
-        "page_request_var": page_request_var,
-        "today": today,
-    }
-    return render(request, "post_list.html", context_data)
+        query = request.GET.get("query")
+        if query:
+            queryset_list = queryset_list.filter(
+                Q(title__icontains=query) |
+                Q(content__icontains=query) |
+                Q(user__first_name__icontains=query) |
+                Q(user__last_name__icontains=query) |
+                Q(user__username__icontains=query)
+            ).distinct()
+
+        paginator = Paginator(queryset_list, 5)
+        page_request_var = "page"
+        page = request.GET.get(page_request_var)
+        try:
+            queryset = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page
+            queryset = paginator.page(1)
+        except EmptyPage:
+            queryset = paginator.page(paginator.num_pages)
+
+        today = timezone.now().date()
+
+        context_data = {
+            "objects_list": queryset,
+            "page_request_var": page_request_var,
+            "today": today,
+        }
+
+        return render(request, self.template_name, context_data)
 
 
 class PostUpdateView(UserPassesTestMixin, UpdateView):

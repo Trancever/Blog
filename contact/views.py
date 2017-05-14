@@ -1,21 +1,17 @@
 from django.shortcuts import render
 from django.core.mail import send_mail
 from django.http import JsonResponse
+from django.views.generic import FormView
+from django.conf import settings
 
 from .forms import ContactForm
-from django.conf import settings
 
 
 # Create your views here.
 
-def contact_view(request):
-    form = ContactForm(request.POST or None)
-
-    context = {
-        "form": form,
-    }
-
-    return render(request, "contact.html", context)
+class ContactFormView(FormView):
+    template_name = "contact.html"
+    form_class = ContactForm
 
 
 def send_message(request):
@@ -40,7 +36,3 @@ def send_message(request):
             return JsonResponse(response_data)
 
     return JsonResponse({})
-
-
-def about(request):
-    return render(request, "", {})

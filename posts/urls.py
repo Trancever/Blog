@@ -17,7 +17,7 @@ Including another URLconf
 from django.conf.urls import url
 
 from .views import (
-    posts_list,
+    PostsListView,
     PostDetailView,
     PostCreateView,
     PostUpdateView,
@@ -26,6 +26,6 @@ from .views import (
 urlpatterns = [
     url(r'^create$', PostCreateView.as_view(), name="create"),
     url(r'^(?P<slug>[\w-]+)/$', PostDetailView.as_view(), name="detail"),
-    url(r'^$', posts_list, name="list"),
+    url(r'^$', PostsListView.as_view(), name="list"),
     url(r'^(?P<slug>[\w-]+)/edit/$', PostUpdateView.as_view(), name="update"),
 ]
