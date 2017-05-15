@@ -19,6 +19,6 @@ from django.conf.urls import url
 from .views import ContactFormView, send_message
 
 urlpatterns = [
-    url(r'^message/$', ContactFormView.as_view(), name="message_view"),
+    url(r'^message/$', ContactFormView.as_view(), name="contact_view"),
     url(r'^send/$', send_message, name="send_message_view"),
 ]
