@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "comments",
     'posts',
     'contact',
+    'taggit',
 ]
 
 AUTHENTICATION_BACKENDS = (

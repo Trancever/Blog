@@ -10,6 +10,7 @@ from django.utils.text import slugify
 from django.contrib.contenttypes.models import ContentType
 
 from markdown_deux import markdown
+from taggit.managers import TaggableManager
 
 from comments.models import Comment
 
@@ -53,6 +54,8 @@ class Post(models.Model):
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
 
     objects = PostManager()
+
+    tags = TaggableManager()
 
     def __unicode__(self):
         return self.title
