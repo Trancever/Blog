@@ -166,7 +166,7 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, "public", "static")
-MEDIA_ROOT = os.path.join(BASE_DIR, "public", "static")
+MEDIA_ROOT = os.path.join(BASE_DIR, "public", "media")
 
 CRISPY_TEMPLATE_PACK = "bootstrap3"
 
