@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     # local stuff
     "comments",
     'posts',
+    'contact',
 ]
 
 AUTHENTICATION_BACKENDS = (

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="col-sm-10 col-sm-offset-1">
+        <div class="form">
+            <h1 class="center margin-bottom-15">Wypełnij formularz jeśli chcesz się ze mną skontaktować.</h1>
+            <form id="message-form" method="POST" action=".">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary">Wyślji</button>
+            </form>
+        </div>
+        <div class="notification white-box" style="display: none;">
+            <h1 class="center margin-bottom-15">Wiadomość została pomyślnie wysłana.</h1>
+            <p class="center lead">Przejdź na stronę <a href="{% url "posts:list" %}">domową</a>.</p>
+        </div>
+    </div>
+
+    <div class="modal modal-loading"></div>
+
+{% endblock content %}
+
+{% block scripts %}
+    <script src="{% static "js/email_notification.js" %}"></script>
+{% endblock scripts %}

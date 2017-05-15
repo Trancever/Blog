@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     # local stuff
     "comments",
     'posts',
+    'contact',
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -137,6 +138,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Security
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
@@ -160,8 +165,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn")
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media_cdn")
+STATIC_ROOT = os.path.join(BASE_DIR, "public", "static_cdn")
+MEDIA_ROOT = os.path.join(BASE_DIR, "public", "media_cdn")
 
 CRISPY_TEMPLATE_PACK = "bootstrap3"
 
@@ -171,7 +176,7 @@ SITE_ID = 1
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_PASSWORD = 'Dawidek123' #my gmail password
-EMAIL_HOST_USER = 'tranceverrr@gmail.com' #my gmail username
+EMAIL_HOST_PASSWORD = 'Dawidek123'  # my gmail password
+EMAIL_HOST_USER = 'tranceverrr@gmail.com'  # my gmail username
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

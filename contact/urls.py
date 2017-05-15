@@ -16,16 +16,9 @@ Including another URLconf
 """
 from django.conf.urls import url
 
-from .views import (
-    PostsListView,
-    PostDetailView,
-    PostCreateView,
-    PostUpdateView,
-)
+from .views import ContactFormView, send_message
 
 urlpatterns = [
-    url(r'^create$', PostCreateView.as_view(), name="create"),
-    url(r'^(?P<slug>[\w-]+)/$', PostDetailView.as_view(), name="detail"),
-    url(r'^$', PostsListView.as_view(), name="list"),
-    url(r'^(?P<slug>[\w-]+)/edit/$', PostUpdateView.as_view(), name="update"),
+    url(r'^message/$', ContactFormView.as_view(), name="message_view"),
+    url(r'^send/$', send_message, name="send_message_view"),
 ]

@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block head_title %}Robimy bloga!{% endblock head_title %}</title>
+    <title>{% block head_title %}Programowanie Dawid Urbaniak{% endblock head_title %}</title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -14,6 +14,9 @@
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,400,600,700&amp;lang=pl"/>
+
+    <!-- Font awesome css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
         {% block style %}
@@ -28,8 +31,11 @@
 </head>
 <body>
 
-{% include 'navbar.html' %}
-<div class="container">
+{% block navbar %}
+    {% include 'navbar.html' %}
+{% endblock navbar %}
+
+<div class="container margin-top-75">
     {% block content %}
 
     {% endblock content %}
@@ -53,8 +59,10 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
 
-<script src="{% static "js/markdown.js" %}"></script>
-<script src="{% static "js/comments.js" %}"></script>
+{% block scripts %}
+    <script src="{% static "js/markdown.js" %}"></script>
+    <script src="{% static "js/comments.js" %}"></script>
+{% endblock scripts %}
 
 </body>
 </html>

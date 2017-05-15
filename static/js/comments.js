@@ -1,13 +1,14 @@
 $(document).ready(function () {
+
     $(".comment-reply-btn").click(function (event) {
         var link = $(this);
         event.preventDefault();
         console.log("reply link clicked")
         $(this).closest(".comment").children(".comment_reply").fadeToggle("medium", function () {
             if ($(this).is(":visible")) {
-                link.text("Hide");
+                link.text("Schowaj");
             } else {
-                link.text("Show");
+                link.text("Pokaż");
             }
         });
     })
@@ -55,7 +56,7 @@ $(document).ready(function () {
                 console.log(json.is_success)
                 if (json.is_success == true) {
                     console.log("id = " + json.comment_id + ", new content = " + json.comment_content);
-                    $("div#" + json.comment_id).find(".panel-body").text(json.comment_content)
+                    $("div#" + json.comment_id).find("#content" + json.comment_id).text(json.comment_content)
                 }
             },
 

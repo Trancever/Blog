@@ -1,16 +1,42 @@
-<div class="blog-masthead">
-    <div class="container">
-        <nav class="blog-nav">
-            <a class="blog-nav-item active" href="{% url 'posts:list' %}">Blog</a>
-            <a class="blog-nav-item" href="#">Contact</a>
-            <a class="blog-nav-item" href="#">About</a>
-            {% if not user.is_authenticated %}
-            <a class="blog-nav-item pull-right" href="{% url 'account_signup' %}">Register</a>
-            <a class="blog-nav-item pull-right" href="{% url 'account_login' %}">Login</a>
-            {% else %}
-            <a class="blog-nav-item pull-right" href="{% url 'account_logout' %}">Logout</a>
-            {% endif %}
+<div class="container">
+    <div class="row">
+        <!-- end nav bar -->
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#topFixedNavbar1"><span class="sr-only">Toggle navigation</span><span
+                            class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                    </button>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="topFixedNavbar1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="{% url 'posts:list' %}">Blog<span
+                                class="sr-only">(current)</span></a></li>
+                        <li><a href="{% url 'contact:contact_view' %}">Kontakt</a></li>
+                        <li><a href="#">O mnie</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right nav-pills">
+                        <li><a href="https://github.com/Trancever"><i class="fa fa-lg fa-github"></i></a></li>
+                        <li><a href="https://www.linkedin.com/in/dawid-urbaniak-a21940127/"><i
+                                class="fa fa-lg fa-linkedin"></i></a></li>
+                        {% if not user.is_authenticated %}
+                            <li><a href="{% url 'account_login' %}">Zaloguj</a></li>
+                            <li><a href="{% url 'account_signup' %}">Zarejestruj</a></li>
+                        {% else %}
+                            <li><a class="blog-nav-item pull-right" href="#">Zalogowany jako:
+                                {% if request.user.get_full_name %}{{ request.user.get_full_name }}{% else %}
+                                    {{ request.user }}{% endif %}</a></li>
+                            <li><a class="blog-nav-item pull-right" href="{% url 'account_logout' %}">Wyloguj</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
         </nav>
+        <!-- end nav bar -->
     </div>
 </div>
-</br>

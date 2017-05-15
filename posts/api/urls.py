@@ -19,8 +19,5 @@ from django.conf.urls import url
 from .views import (PostListAPIView)
 
 urlpatterns = [
-    # url(r'^create$', posts_create),
-    # url(r'^(?P<slug>[\w-]+)/$', posts_detail, name="detail"),
     url(r'^$', PostListAPIView.as_view(), name="post_list_api"),
-    # url(r'^(?P<slug>[\w-]+)/edit/$', posts_update, name="update"),
 ]

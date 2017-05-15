@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
 {% load urlify %}
 
 {% block head_title %}
@@ -27,7 +26,7 @@
                             <small>by {{ object.user.get_full_name }}        {% if user == object.user %}
                                 <button type="button" style="display: inline;" class="link pull-right"
                                         data-toggle="modal"
-                                        data-target="#myModal">Delete this post
+                                        data-target="#myModal">Usuń ten post
                                 </button>
                             {% endif %}</small>
                         </small>
@@ -37,188 +36,17 @@
                     <div class="post-detail-item">{{ object.get_markdown }}</div>
                     </br>
                     </hr>
-                    {#        <p>#}
-                    {#        <div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="button_count"#}
-                    {#             data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>#}
-                    {#        </p>#}
                 </div>
             </div>
             </br>
-            <div class="">
-                <div class="padding-sides-15">
-                    <p class="lead">Comments</p>
-                    <form method="POST" action="." class="comment-create">{% csrf_token %}
-                        {{ comment_form|crispy }}
-                        <input id="comment-user-validator" type="hidden" value="{{ user.is_authenticated }}">
-                        <div id="comment-content-validation-message" class="validation-message">
-                            <p>You have to be logged in to post comments. </p>
-                            <p class="black-color"><a href="{% url "account_login" %}">Sign in </a>or <a
-                                    href="{% url "account_signup" %}">Sign up </a>if you don't have an account yet.</p>
-                        </div>
-                        <button class="btn btn-default">Comment</button>
-                    </form>
-                    <br/>
-                    <br/>
-                </div>
-                <div id="comments">
-                    {% for comment in object.comments %}
-                        <div id="{{ comment.id }}">
-                            <div class="row nopadding margin-bottom15 comment">
-                                <div class="comment-not-edited">
-                                    <div class="col-sm-2">
-                                        <img class="img-responsive img-thumbnail"
-                                             src="{{ comment.user.profile.profile_image_url }}">
-                                    </div><!-- /col-sm-1 -->
 
-                                    <div class="col-sm-10">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <strong>
-                                                    {% if comment.user.get_full_name %}
-                                                        {{ comment.user.get_full_name }}{% else %}
-                                                        {{ comment.user }}{% endif %}</strong>
-                                                <span class="text-muted">{{ comment.updated|timesince }} ago | {{ comment.children.count }}
-                                Repl{% if comment.children.count > 1 %}ies{% else %}y{% endif %} | <a href="#"
-                                                                                                      class="comment-reply-btn">Show</a>
-                                                    {% if user == comment.user %} |
-                                                        <a href="#" class="comment-edit-btn">Edit</a> |
-                                                        <form method="POST" action="." class="comment-delete"
-                                                              style="display: inline;">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="comment_id" value="{{ comment.id }}">
-                                            <button type="submit" class="link">Delete</button>
-                                        </form>
-                                                    {% endif %}
-                                    </span>
-                                            </div>
-                                            <div class="panel-body overflow-break-word">{{ comment.content }}</div>
-                                            <!-- /panel-body -->
-                                        </div><!-- /panel panel-default -->
-                                    </div>
-                                </div><!-- /col-sm-10 -->
-                                <div class="comment-edited" style="display:none;"> <!-- Edit comment form -->
-                                    <form method="POST" action="." class="comment-edit">{% csrf_token %}
-                                        {{ comment_form|crispy }}
-                                        <input type="hidden" name="comment_id" value="{{ comment.id }}">
-                                        <p id="comment-content-validation-message"
-                                           class="validation-message">Comment content can't be empty.</p>
-                                        <button type="submit" class="btn btn-default">Save</button>
-                                    </form>
-                                </div>
-                                <div class="comment_reply" style="display: none;">
-                                    <div class="row nopadding margin-bottom15">
-                                        <div class="col-sm-10 pull-right nopadding">
-                                            {% for child in comment.children %}
-                                                <div id="{{ child.id }}">
-                                                    <div class="col-sm-2">
-                                                        <img class="img-responsive img-thumbnail"
-                                                             src="{{ child.user.profile.profile_image_url }}">
-                                                    </div><!-- /col-sm-1 -->
 
-                                                    <div class="col-sm-10">
-                                                        <div class="panel panel-default">
-                                                            <div class="panel-heading">
-                                                                <strong>{% if child.user.get_full_name %}
-                                                                    {{ child.user.get_full_name }}{% else %}
-                                                                    {{ child.user }}{% endif %}</strong>
-                                                                <span class="text-muted">{{ child.updated|timesince }} ago | {{ child.children.count }}
-                                Repl{% if child.children.count > 1 %}ies{% else %}y{% endif %}
-                                                                    {% if user == child.user %} |
-                                                                        <a href="#" class="comment-edit-btn">Edit</a> |
-                                                                        <form method="POST" action="."
-                                                                              class="comment-delete"
-                                                                              style="display: inline;">
-                                                                {% csrf_token %}
-                                                                <input type="hidden" name="comment_id"
-                                                                       value="{{ child.id }}">
-                                                                <button type="submit" class="link">Delete</button>
-                                                                </form>
-                                                                    {% endif %}
-                                                        </span>
-                                                            </div>
-                                                            <div class="panel-body overflow-break-word">{{ child.content }}</div>
-                                                            <!-- /panel-body -->
-                                                        </div><!-- /panel panel-default -->
-                                                    </div>
-                                                    <div>
-                                                        <div class="comment-edited padding-sides-15" style="display: none">
-                                                            <form method="POST" action="."
-                                                                  class="comment-edit">{% csrf_token %}
-                                                                {{ comment_form|crispy }}
-                                                                <input type="hidden" name="comment_id"
-                                                                       value="{{ child.id }}">
-                                                                <p id="comment-content-validation-message"
-                                                                   class="validation-message">Comment content can't be
-                                                                    empty.</p>
-                                                                <button type="submit" class="btn btn-default">Save
-                                                                </button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            {% endfor %}
-                                            <form method="POST" action="."
-                                                  class="comment-create padding-sides-15">{% csrf_token %}
-                                                {{ comment_form|crispy }}
-                                                <input type="hidden" name="parent_id" value="{{ comment.id }}">
-                                                <input id="comment-user-validator" type="hidden"
-                                                       value="{{ user.is_authenticated }}">
-                                                <div id="comment-content-validation-message" class="validation-message">
-                                                    <p>You have to be logged in to post comments. </p>
-                                                    <p class="black-color"><a href="{% url "account_login" %}">Sign
-                                                        in </a>or
-                                                        <a
-                                                                href="{% url "account_signup" %}">Sign up </a>if you
-                                                        don't
-                                                        have an
-                                                        account yet.</p>
-                                                </div>
-                                                <button type="submit" class="btn btn-default">Reply</button>
-                                            </form>
-                                        </div><!-- /col-sm-10 -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
+            {% include "comments.html" %}
 
-            </div>
         </div>
 
-        <div class="col-sm-3 col-sm-offset-1">
-            <div class="sidebar-module white-box">
-                <h3 class="underlined">O mnie</h3>
-                <p>Cześć! Nazywam sie Dawid, jestem junior programistą, studiuję informatykę na
-                    politechnice łódzkiej, zawodowo programuję w C++. W niedalekiej przyszłości mam zamiar zacząć
-                    przygodę z programowaniem webowym. Pierwszym krokiem było napisanie tego bloga przy użyciu
-                    frameworku "Django".</p>
-            </div>
-            <div class="sidebar-module">
-                <h3 class="underlined">Archiwa</h3>
-                <ol class="sidebar-list">
-                    <li><a href="#">March 2014</a></li>
-                    <li><a href="#">February 2014</a></li>
-                    <li><a href="#">January 2014</a></li>
-                    <li><a href="#">December 2013</a></li>
-                    <li><a href="#">November 2013</a></li>
-                    <li><a href="#">October 2013</a></li>
-                    <li><a href="#">September 2013</a></li>
-                    <li><a href="#">August 2013</a></li>
-                    <li><a href="#">July 2013</a></li>
-                    <li><a href="#">June 2013</a></li>
-                    <li><a href="#">May 2013</a></li>
-                    <li><a href="#">April 2013</a></li>
-                </ol>
-            </div>
-            <div class="sidebar-module">
-                <h3 class="underlined">Linki</h3>
-                <ol class="sidebar-list">
-                    <li><a href="https://github.com/Trancever">GitHub</a></li>
-                    <li><a href="https://www.linkedin.com/in/dawid-urbaniak-a21940127/">Linkedin</a></li>
-                </ol>
-            </div>
-        </div><!-- /.blog-sidebar -->
+        {% include "sidebar.html" %}
+
     </div>
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
@@ -228,7 +56,7 @@
             <div class="modal-content">
                 <div class="center modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Do you really want to delete this post?</h4>
+                    <h4 class="modal-title">Na pewno chcesz usunąć ten post?</h4>
                 </div>
                 <div class="modal-body">
                     <div class="header center">{{ object.title }}</div>
@@ -236,9 +64,9 @@
                 <div class="modal-footer">
                     <form method="POST" action=".">
                         {% csrf_token %}
-                        <input type="SUBMIT" class="btn btn-warning" value="Delete">
+                        <input type="SUBMIT" class="btn btn-warning" value="Usuń">
                         <input type="hidden" name="post_title" value="{{ object.title }}">
-                        <a href="{{ object.get_absolute_url }}" class="btn btn-default">Cancel</a>
+                        <a href="{{ object.get_absolute_url }}" class="btn btn-default">Cofnij</a>
                     </form>
                 </div>
             </div>

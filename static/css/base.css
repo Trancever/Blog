@@ -131,6 +131,11 @@ span.btn-group {
     font-weight: 700;
 }
 
+.error {
+    border-radius: 4px;
+    border: 1px solid #a94442;
+}
+
 .wmd-panel {
     margin-left: 0px;
     margin-right: 0px;
@@ -138,12 +143,26 @@ span.btn-group {
 }
 
 .fb {
-    background: url('/static/img/fb.png') no-repeat center top;
+    background: url('/static/img/facebook.png') no-repeat center top;
     box-shadow: 2px 2px 8px rgba(0, 0, 0, .7);
     border-radius: 5px;
     width: 198px;
     height: 37px;
     margin: 60px auto;
+    overflow: hidden;
+}
+
+.linkedin {
+    background: url('/static/img/linkedin.png') no-repeat center top;
+    width: 115px;
+    height: 35px;
+    overflow: hidden;
+}
+
+.github {
+    background: url("/static/img/github.png") no-repeat center top;
+    width: 40px;
+    height: 10px;
     overflow: hidden;
 }
 
@@ -233,12 +252,16 @@ a:hover {
     padding-right: 15px;
 }
 
-.margin-bottom15 {
+.margin-bottom-15 {
     margin-bottom: 15px;
 }
 
 .margin-top-15 {
     margin-top: 15px;
+}
+
+.margin-top-75 {
+    margin-top: 75px;
 }
 
 .underlined {
@@ -248,6 +271,10 @@ a:hover {
 
 .oranged {
     color: #f16c20;
+}
+
+.dark-blue {
+    color: #002d3f;
 }
 
 .padding-top-15 {
@@ -268,7 +295,6 @@ a:hover {
 
 .sidebar-module-inset {
     padding: 15px;
-    background-color: #f5f5f5;
     border-radius: 4px;
 }
 
@@ -288,6 +314,10 @@ a:hover {
     text-align: center;
     background-color: #f9f9f9;
     border-top: 1px solid #e5e5e5;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 .blog-footer p:last-child {
@@ -299,18 +329,152 @@ a:hover {
     margin-right: 5px;
 }
 
-/*
- * Side bar list styles
- */
-
-.sidebar-list a {
-    color: gray;
-    font-size: 14px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+.sidebar-list li {
+    list-style-type: none;
 }
 
-.sidebar-list li {
-    margin-bottom: 3px;
-    list-style-type: none;
-    margin-left: -40px;
+/*
+ * loading icon
+ */
+.modal-loading {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(255, 255, 255, .8) url("../img/loading.gif") 50% 50% no-repeat;
+}
+
+.navbar.navbar-default.navbar-fixed-top {
+    /*margin-top: 11px;*/
+}
+
+/* navigation stile */
+.navbar-default {
+    background: #002d3f !important;
+    border-color: #6ac6ff;
+}
+
+.navbar-default .navbar-brand {
+    color: #6ac6ff;
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: #ffffff;
+}
+
+.navbar-default .navbar-text {
+    color: #6ac6ff;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: #6ac6ff;
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: #ffffff;
+}
+
+.navbar-default .navbar-nav > li > .dropdown-menu {
+    background: #002d3f;
+}
+
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a {
+    color: #6ac6ff;
+}
+
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a:hover,
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a:focus {
+    color: #ffffff;
+    background: #6ac6ff;
+}
+
+.navbar-default .navbar-nav > li > .dropdown-menu > li > .divider {
+    background: #6ac6ff;
+}
+
+.navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+.navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+.navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #ffffff;
+    background: #6ac6ff;
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+    color: #ffffff;
+    background: #6ac6ff;
+}
+
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+    color: #ffffff;
+    background: #6ac6ff;
+}
+
+.navbar-default .navbar-toggle {
+    border-color: #6ac6ff;
+}
+
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+    background: #6ac6ff;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background: #6ac6ff;
+}
+
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+    border-color: #6ac6ff;
+}
+
+.navbar-default .navbar-link {
+    color: #6ac6ff;
+}
+
+.navbar-default .navbar-link:hover {
+    color: #ffffff;
+}
+
+@media (max-width: 767px) {
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+        color: #6ac6ff;
+    }
+
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #ffffff;
+    }
+
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+        color: #ffffff;
+        background: #6ac6ff;
+    }
+
+    .nav.navbar-nav.links {
+        margin-left: -11px;
+        text-align: center;
+    }
+
+    .nav.navbar-nav.navbar-right {
+        text-align: center;
+
+    }
+
+}
+
+/* end navbar stile */
+#login {
+    margin-top: -13px;
+    margin-bottom: -11px;
 }
