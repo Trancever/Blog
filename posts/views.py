@@ -116,9 +116,6 @@ class PostsListView(TemplateView):
         else:
             queryset_list = Post.objects.active()
 
-        tag_query = request.GET.get("tag")
-        print(tag_query)
-
         query = request.GET.get("query")
         if query:
             queryset_list = queryset_list.filter(
@@ -129,6 +126,7 @@ class PostsListView(TemplateView):
                 Q(user__username__icontains=query)
             ).distinct()
 
+        tag_query = request.GET.get("tag")
         if tag_query:
             queryset_list = queryset_list.filter(
                 Q(tags__name__icontains=tag_query)
