@@ -6,9 +6,11 @@ from django.db.models import Q
 from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse_lazy, reverse
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import UserPassesTestMixin
+
+from taggit.models import Tag
 
 from comments.models import Comment
 from .models import Post
@@ -103,9 +105,6 @@ class PostDetailView(UserPassesTestMixin, TemplateView):
             "comment_form": comment_form,
         }
         return render(request, self.template_name, context_data)
-
-
-from taggit.models import Tag
 
 class PostsListView(TemplateView):
     template_name = "post_list.html"
