@@ -16,4 +16,18 @@
                href="https://www.linkedin.com/in/dawid-urbaniak-a21940127/"></a>
         </div>
     </div>
+    {% if tags.count > 0 %}
+        <div class="sidebar-module">
+            <h3 class="underlined">Filtruj po tagach</h3>
+            {% for tag in tags %}
+                <div class="row padding-sides-15">
+                    <form method="GET">
+                        <h5>
+                            <button name="tag" type="submit" class="link" value="{{ tag.name }}">{{ tag.name }}</button>
+                        </h5>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 </div><!-- /.blog-sidebar -->

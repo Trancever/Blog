@@ -55,7 +55,7 @@ class Post(models.Model):
 
     objects = PostManager()
 
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
 
     def __unicode__(self):
         return self.title

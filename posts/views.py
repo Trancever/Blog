@@ -105,6 +105,7 @@ class PostDetailView(UserPassesTestMixin, TemplateView):
         return render(request, self.template_name, context_data)
 
 
+from taggit.models import Tag
 
 class PostsListView(TemplateView):
     template_name = "post_list.html"
@@ -115,6 +116,9 @@ class PostsListView(TemplateView):
         else:
             queryset_list = Post.objects.active()
 
+        tag_query = request.GET.get("tag")
+        print(tag_query)
+
         query = request.GET.get("query")
         if query:
             queryset_list = queryset_list.filter(
@@ -123,6 +127,11 @@ class PostsListView(TemplateView):
                 Q(user__first_name__icontains=query) |
                 Q(user__last_name__icontains=query) |
                 Q(user__username__icontains=query)
+            ).distinct()
+
+        if tag_query:
+            queryset_list = queryset_list.filter(
+                Q(tags__name__icontains=tag_query)
             ).distinct()
 
         paginator = Paginator(queryset_list, 5)
@@ -138,10 +147,13 @@ class PostsListView(TemplateView):
 
         today = timezone.now().date()
 
+        tags_queryset = Tag.objects.all().distinct()
+
         context_data = {
             "objects_list": queryset,
             "page_request_var": page_request_var,
             "today": today,
+            "tags": tags_queryset,
         }
 
         return render(request, self.template_name, context_data)
