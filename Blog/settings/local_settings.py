@@ -178,3 +178,8 @@ EMAIL_HOST_PASSWORD = 'Dawidek123' #my gmail password
 EMAIL_HOST_USER = 'tranceverrr@gmail.com' #my gmail username
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# Configuration of All auth app to use my own forms.
+ACCOUNT_FORMS = {
+    'login': 'CustomForms.forms.MyLoginForm'
+}

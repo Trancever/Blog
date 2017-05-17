@@ -1,6 +1,11 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from django import forms
 
 from pagedown.widgets import PagedownWidget
+
+from allauth.account.forms import LoginForm
 
 from .models import Post
 

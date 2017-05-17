@@ -104,12 +104,13 @@ span.btn-group {
     border-radius: 5px;
     width: 198px;
     height: 37px;
-    margin: 60px auto;
+    margin: 60px auto 45px auto;
     overflow: hidden;
 }
 
 .header {
     font-size: 19px;
+    margin-bottom: 15px !important;
 }
 
 .center {
