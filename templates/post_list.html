@@ -46,6 +46,13 @@
                                                           href="{{ object.get_absolute_url }}">{{ object.title }}
                                 <small>{{ object.publish }}
                                 </small>
+                                {% if object.tags.all.count > 0 %}
+                                    <div class="tag-box">
+                                        {% for tag in object.tags.all %}
+                                            <small>{{ tag.name }}</small>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
                             </a></h2>
                             {{ object.get_markdown|truncatechars_html:150 }}
                             <p><a style="font-size: 18px;" href="{{ object.get_absolute_url }}">Czytaj więcej..</a>

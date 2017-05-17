@@ -424,3 +424,10 @@ a:hover {
     margin-top: -13px;
     margin-bottom: -11px;
 }
+
+.tag-box {
+    padding: 5px 10px 5px 10px;
+    background-color: #002d3f;
+    color: #FFFFFF; float: right;
+    font-size: 18px;
+}

@@ -19,7 +19,15 @@
                         <img src="{{ object.image.url }}" class="img-responsive">
                         <br/>
                     {% endif %}
-                    <h1 class="oranged">{{ object.title }}</h1>
+                    <h1 class="dark-blue">{{ object.title }}
+                    {% if object.tags.all.count > 0 %}
+                        <div class="tag-box">
+                            {% for tag in object.tags.all %}
+                                <small>{{ tag.name }}</small>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    </h1>
                     <h2>
                         <small>{% if object.draft %}
                             <span style="color:red;">Draft</span>{% endif %} {{ object.publish }}
