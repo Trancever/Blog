@@ -13,3 +13,4 @@ class MyLoginForm(LoginForm):
         self.fields['remember'].label = 'Zapamiętaj'
         self.fields['login'].widget.attrs['placeholder'] = 'Nazwa użytkownika'
         self.fields['password'].widget.attrs['placeholder'] = 'Hasło'
+
