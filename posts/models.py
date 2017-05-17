@@ -1,8 +1,7 @@
 from __future__ import unicode_literals
 
-from django.db import models
 from django.core.urlresolvers import reverse
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, pre_delete
 from django.conf import settings
 from django.utils import timezone
 from django.utils.safestring import mark_safe
@@ -98,11 +97,28 @@ def create_slug(instance, new_slug=None):
 
 
 def pre_save_post_receiver(sender, instance, *args, **kwargs):
+    """Create slug if instance's slug was empty"""
     if not instance.slug:
         instance.slug = create_slug(instance)
 
 
 pre_save.connect(pre_save_post_receiver, sender=Post)
+
+
+def pre_delete_post_receiver(sender, instance, *args, **kwargs):
+    """Delete tags assigned to deleted post if no other posts have this tags assigned"""
+    instance_tags = instance.tags.all()
+    for tag in instance_tags:
+        post_objects = Post.objects.exclude(id=instance.id)
+        flag = False
+        for post in post_objects:
+            if tag.name in post.tags.all():
+                flag = True
+        if flag == False:
+            tag.delete()
+
+
+pre_delete.connect(receiver=pre_delete_post_receiver, sender=Post)
 
 
 class UserProfile(models.Model):
