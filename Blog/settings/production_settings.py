@@ -184,5 +184,7 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # Configuration of All auth app to use my own forms.
 ACCOUNT_FORMS = {
-    'login': 'CustomForms.forms.MyLoginForm'
+    'login': 'CustomForms.MyLoginForm.MyLoginForm',
 }
+
+ACCOUNT_SIGNUP_FORM_CLASS = 'CustomForms.MySignUpForm.MySignUpForm'
