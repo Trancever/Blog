@@ -5,10 +5,9 @@
     {{ object.title }} | {{ block.super }}
 {% endblock head_title %}
 
-<style>
-    {% block style %}
-    {% endblock style %}
-</style>
+{% block style %}
+
+{% endblock style %}
 
 {% block content %}
     <div class="row margin-top-15">

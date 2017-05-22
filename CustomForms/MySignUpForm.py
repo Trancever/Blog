@@ -11,8 +11,6 @@ class MySignUpForm(forms.Form):
 
         self.fields['username'].label = 'Nazwa użytkownika'
         self.fields['username'].widget.attrs['placeholder'] = 'Nazwa użytkownika'
-        self.fields['email'].widget.attrs['placeholder'] = 'dupa'
-
 
     def signup(self, request, user):
         pass
