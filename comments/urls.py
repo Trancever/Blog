@@ -16,9 +16,10 @@ Including another URLconf
 """
 from django.conf.urls import url
 
-from .views import delete_comment, edit_comment
+from .views import delete_comment, edit_comment, create_comment
 
 urlpatterns = [
     url(r'^delete_comment/$', delete_comment, name="delete_comment"),
     url(r'^edit_comment/$', edit_comment, name="edit_comment"),
+    url(r'^create_comment/$', create_comment, name="create_comment"),
 ]

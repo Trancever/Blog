@@ -106,13 +106,55 @@ $(document).ready(function () {
 
     // Validate if user is authenticated and can post comments
     $(".comment-create").on('submit', function (event) {
-        // event.preventDefault();
+        event.preventDefault();
         console.log($("#comment-user-validator").val() )
         if ($("#comment-user-validator").val() == "False") {
             $(this).children("#comment-content-validation-message").show();
-            event.preventDefault();
+            return;
         }
+
+        let object_id = $(this).find("#id_object_id").val();
+        let content_type = $(this).find("#id_content_type").val();
+        let comment_content = $(this).find("textarea#id_content").val();
+        let parent_id = $(this).find("[name='parent_id']").val();
+        console.log(object_id)
+        console.log(content_type)
+        console.log(comment_content)
+        console.log(parent_id)
+        create_comment(object_id, content_type, comment_content, parent_id);
     })
+
+    function create_comment(object_id, content_type, comment_content, parent_id) {
+        $.ajax({
+            url: "/comments/create_comment/",
+            type: "POST",
+            data: {
+                object_id: object_id,
+                content_type: content_type,
+                comment_content: comment_content,
+                parent_id: parent_id,
+            },
+
+            success: function (json) {
+                if (json.success == false) {
+                    return;
+                };
+                console.log(json.name);
+                console.log(json.photo_url);
+                if (parent_id === undefined) {
+
+                } else {
+
+                }
+            },
+
+            error: function (xhr, errmsg, err) {
+                $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: " + errmsg +
+                    " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            },
+        });
+    };
 })
 
 $(function () {

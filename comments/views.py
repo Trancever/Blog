@@ -1,4 +1,5 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseBadRequest
+from django.contrib.contenttypes.models import ContentType
 
 from .models import Comment
 
@@ -34,7 +35,6 @@ def delete_comment(request):
     return JsonResponse(response_data)
 
 
-
 # Ajax editing comment.
 def edit_comment(request):
     if request.method == 'POST':
@@ -62,3 +62,45 @@ def edit_comment(request):
                 return JsonResponse(response_data)
 
     return JsonResponse(response_data)
+
+
+def create_comment(request):
+    if request.method == 'POST':
+        try:
+            object_id = int(request.POST.get("object_id"))
+            type = request.POST.get("content_type")
+            comment_content = request.POST.get("comment_content")
+            parent_id = request.POST.get("parent_id")
+        except:
+            return HttpResponseBadRequest()
+
+        c_type = ContentType.objects.get(model=type)
+        parent_obj = None
+        if parent_id is not None:
+            parent_qs = Comment.objects.filter(id=parent_id)
+            if parent_qs.exists() and parent_qs.count() == 1:
+                parent_obj = parent_qs.first()
+
+        new_comment, created = Comment.objects.get_or_create(
+                user=request.user,
+                content_type=c_type,
+                object_id=object_id,
+                content=comment_content,
+                parent=parent_obj
+            )
+
+        if new_comment.user.get_full_name:
+            name = new_comment.user.get_full_name()
+        else:
+            name = new_comment.user
+
+        responses_amount = new_comment.children.count()
+
+        response_data = {
+            "success": True,
+            "name": name,
+            "photo_url": new_comment.user.profile.profile_image_url(),
+        }
+
+        return JsonResponse(response_data)
+
