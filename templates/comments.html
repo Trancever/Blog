@@ -63,7 +63,7 @@
                 </div>
                 <div class="comment_reply" style="display: none;">
                     <div class="row nopadding margin-bottom15">
-                        <div class="col-sm-10 pull-right nopadding">
+                        <div id="child-comments" class="col-sm-10 pull-right nopadding">
                             {% for child in comment.children %}
                                 <div id="{{ child.id }}">
                                     <div class="comment-not-edited">

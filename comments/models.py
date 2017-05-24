@@ -28,7 +28,7 @@ class Comment(models.Model):
     content_object = GenericForeignKey('content_type', 'object_id')
     parent = models.ForeignKey("self", null=True, blank=True)
 
-    content = models.TextField()
+    content = models.TextField(unique=False)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

@@ -81,7 +81,7 @@ def create_comment(request):
             if parent_qs.exists() and parent_qs.count() == 1:
                 parent_obj = parent_qs.first()
 
-        new_comment, created = Comment.objects.get_or_create(
+        new_comment = Comment.objects.create(
                 user=request.user,
                 content_type=c_type,
                 object_id=object_id,
@@ -100,6 +100,7 @@ def create_comment(request):
             "success": True,
             "name": name,
             "photo_url": new_comment.user.profile.profile_image_url(),
+            "comment_id": new_comment.id,
         }
 
         return JsonResponse(response_data)
