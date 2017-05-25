@@ -94,13 +94,16 @@ def create_comment(request):
         else:
             name = new_comment.user
 
-        responses_amount = new_comment.children.count()
+        child_amount = 0
+        if parent_obj is not None:
+            child_amount = parent_obj.children.count()
 
         response_data = {
             "success": True,
             "name": name,
             "photo_url": new_comment.user.profile.profile_image_url(),
             "comment_id": new_comment.id,
+            "children": child_amount,
         }
 
         return JsonResponse(response_data)

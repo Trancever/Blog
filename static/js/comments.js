@@ -65,11 +65,7 @@ $(document).ready(function () {
             let comment_content = $(this).find("textarea#id_content").val();
             let parent_id = $(this).find("[name='parent_id']").val();
             let csrf_token = $(this).find("[name='csrfmiddlewaretoken']").val();
-            console.log(object_id)
-            console.log(content_type)
-            console.log(comment_content)
-            console.log(parent_id)
-            console.log(csrf_token)
+
             create_comment(object_id, content_type, comment_content, parent_id, csrf_token);
         });
     }
@@ -159,8 +155,9 @@ $(document).ready(function () {
                     comment_div.prepend(get_parent_comment_html(json.comment_id, json.photo_url, json.name, csrf_token, comment_content, object_id));
                 } else {
                     let child_comment_div = $("#" + parent_id.toString()).find("#child-comments");
-                    console.log(child_comment_div);
                     child_comment_div.prepend(get_child_comment_html(json.comment_id, json.photo_url, json.name, csrf_token, comment_content, object_id));
+                    let response_string = ((json.children == 1) ? "Odpowiedź" : "Odpowiedzi");
+                    let parent_div = $("#" + parent_id.toString()).find("#children-amount").text(json.children.toString() + " " + response_string + " | ");
                 }
                 offEvents();
                 setEvents();
@@ -247,8 +244,8 @@ function get_parent_comment_html(comment_id, photo_url, name, csrf_token, commen
                             <div class="panel-heading">
                                 <strong>` + name +
         `</strong>
-                                <span class="text-muted">0 minutes ago | 0
-                                Odpowiedzi | <a href="#" class="comment-reply-btn">Pokaż</a> |
+                                <span class="text-muted">0 minutes ago | <div id="children-amount" style="display: inline;" >0
+                                Odpowiedzi | </div><a href="#" class="comment-reply-btn">Pokaż</a> |
                                         <a href="#" class="comment-edit-btn">Edytuj</a> |
                                         <form method="POST" action="." class="comment-delete"
                                               style="display: inline;">
