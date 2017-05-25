@@ -57,8 +57,16 @@ $(document).ready(function () {
             console.log($("#comment-user-validator").val())
             if ($("#comment-user-validator").val() == "False") {
                 $(this).children("#comment-content-validation-message").show();
+                $(this).find("#id_content").focus();
                 return;
             }
+            if ($(this).find("#id_content").val().length < 3) {
+                $(this).find("#empty-content-validation-message").show();
+                $(this).find("#id_content").focus();
+                return;
+            }
+
+            $(this).find("#empty-content-validation-message").hide();
 
             let object_id = $(this).find("#id_object_id").val();
             let content_type = $(this).find("#id_content_type").val();
@@ -119,11 +127,10 @@ $(document).ready(function () {
             success: function (json) {
                 if (json.is_success == true) {
                     $("#" + json.parent_id).hide();
-                    if (!(json.parent_comment_id === undefined)) {
+                    if (!(json.parent_comment_id === null)) {
                         let parent_comment_div = $("#" + json.parent_comment_id.toString());
                         let response_string = ((json.parent_comment_children == 1) ? "Odpowiedź" : "Odpowiedzi");
-                        let children_amount_div = parent_comment_div.find("#children-amount").
-                                        text(json.parent_comment_children.toString() + " " + response_string + " | ");
+                        let children_amount_div = parent_comment_div.find("#children-amount").text(json.parent_comment_children.toString() + " " + response_string + " | ");
                     }
                 }
             },
@@ -297,6 +304,9 @@ function get_parent_comment_html(comment_id, photo_url, name, csrf_token, commen
                                     <p class="black-color"><a href="/accounts/login/">Zaloguj </a>lub <a href="/accounts/signup/">zarejestruj się </a>
                                     jeśli nie masz jeszcze konta.</p>
                                 </div>
+                                <div id="empty-content-validation-message" class="validation-message">
+                                    <p>Komentarz musi zawierać co najmniej 3 znaki.</p>
+                                </div>
                                 <button type="submit" class="btn btn-default">Odpowiedz</button>
                             </form>
                         </div>
@@ -311,7 +321,7 @@ function get_child_comment_html(comment_id, photo_url, name, csrf_token, comment
                 <div class="comment-not-edited">
                     <div class="col-sm-2">
                         <img class="img-responsive img-thumbnail"
-                            src="`+ photo_url + `">
+                            src="` + photo_url + `">
                     </div>
                     <div class="col-sm-10">
                         <div class="panel panel-default">
