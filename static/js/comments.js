@@ -117,11 +117,14 @@ $(document).ready(function () {
 
             // handle a successful response
             success: function (json) {
-                console.log(json.parent_id)
-                console.log(json.is_success)
                 if (json.is_success == true) {
-                    console.log($("#" + json.parent_id))
                     $("#" + json.parent_id).hide();
+                    if (!(json.parent_comment_id === undefined)) {
+                        let parent_comment_div = $("#" + json.parent_comment_id.toString());
+                        let response_string = ((json.parent_comment_children == 1) ? "Odpowiedź" : "Odpowiedzi");
+                        let children_amount_div = parent_comment_div.find("#children-amount").
+                                        text(json.parent_comment_children.toString() + " " + response_string + " | ");
+                    }
                 }
             },
 

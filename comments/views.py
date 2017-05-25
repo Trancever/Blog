@@ -13,11 +13,15 @@ def delete_comment(request):
             comment_id = int(request.POST.get("comment_id"))
         except:
             comment_id = None
-        response_data = {}
-        print(comment_id)
 
-        response_data['is_success'] = False
-        response_data['parent'] = False
+        response_data = {
+            'is_success': False,
+            'parent': False,
+            'parent_comment_id': None,
+            'parent_comment_children': None,
+        }
+
+        parent_comment = None
 
         if comment_id is not None:
             comment_qs = Comment.objects.filter(id=comment_id)
@@ -27,9 +31,15 @@ def delete_comment(request):
                     response_data["parent"] = True
                     for child in comment_to_delete.children:
                         child.delete()
+                else:
+                    parent_comment = comment_to_delete.parent
+
                 comment_to_delete.delete()
                 response_data['is_success'] = True
                 response_data['parent_id'] = str(comment_id)
+                if parent_comment is not None:
+                    response_data['parent_comment_id'] = parent_comment.id
+                    response_data['parent_comment_children'] = parent_comment.children.count()
                 return JsonResponse(response_data)
 
     return JsonResponse(response_data)
