@@ -84,48 +84,6 @@ $(document).ready(function () {
 
     setEvents();
 
-    // $(".comment-reply-btn").click(function (event) {
-    //     var link = $(this);
-    //     event.preventDefault();
-    //     console.log("reply link clicked")
-    //     $(this).closest(".comment").children(".comment_reply").fadeToggle("medium", function () {
-    //         if ($(this).is(":visible")) {
-    //             link.text("Schowaj");
-    //         } else {
-    //             link.text("Pokaż");
-    //         }
-    //     });
-    // })
-    //
-    // // Edit comment
-    // $(".comment-edit-btn").click(function (event) {
-    //     event.preventDefault();
-    //     var commentDiv = $(this).closest(".comment-not-edited");
-    //     var editDiv = commentDiv.next(".comment-edited");
-    //     commentDiv.toggle("medium");
-    //     editDiv.toggle("medium");
-    //     var content = commentDiv.find(".panel-body").text();
-    //     var input = editDiv.find("#id_content");
-    //     input.val(content);
-    //     input.focus();
-    // })
-
-    // $("form.comment-edit").on('submit', function (event) {
-    //     event.preventDefault();
-    //     var comment_content = $(this).find("#id_content").val();
-    //     if (comment_content == "") {
-    //         console.log("Content is empty. Validation error.")
-    //         $(this).children("#comment-content-validation-message").show();
-    //         $(this).find("#id_content").focus();
-    //         return;
-    //     }
-    //     console.log("Editing comment with ajax request");
-    //     var comment_id = $(this).children("[name='comment_id']").val();
-    //     edit_comment(comment_id, comment_content)
-    //     $(this).toggle("medium");
-    //     $(this).parent().prev(".comment-not-edited").toggle("medium");
-    // })
-
     function edit_comment(comment_id, content) {
         $.ajax({
             url: "/comments/edit_comment/", // the endpoint
@@ -152,14 +110,6 @@ $(document).ready(function () {
             }
         });
     }
-
-    // $(".comment-delete").on('submit', function (event) {
-    //     event.preventDefault();
-    //     console.log("Deleting comment with ajax request.");
-    //     var comment_id = $(this).children("[name='comment_id']").val()
-    //     console.log($(this).children("[name='comment_id']"))
-    //     delete_comment(comment_id);
-    // })
 
     function delete_comment(comment_id) {
         $.ajax({
@@ -188,27 +138,6 @@ $(document).ready(function () {
         });
     };
 
-    // // Validate if user is authenticated and can post comments
-    // $(".comment-create").on('submit', function (event) {
-    //     event.preventDefault();
-    //     console.log($("#comment-user-validator").val())
-    //     if ($("#comment-user-validator").val() == "False") {
-    //         $(this).children("#comment-content-validation-message").show();
-    //         return;
-    //     }
-    //
-    //     let object_id = $(this).find("#id_object_id").val();
-    //     let content_type = $(this).find("#id_content_type").val();
-    //     let comment_content = $(this).find("textarea#id_content").val();
-    //     let parent_id = $(this).find("[name='parent_id']").val();
-    //     let csrf_token = $(this).find("[name='csrfmiddlewaretoken']").val();
-    //     console.log(object_id)
-    //     console.log(content_type)
-    //     console.log(comment_content)
-    //     console.log(parent_id)
-    //     console.log(csrf_token)
-    //     create_comment(object_id, content_type, comment_content, parent_id, csrf_token);
-    // })
 
     function create_comment(object_id, content_type, comment_content, parent_id, csrf_token) {
         $.ajax({
