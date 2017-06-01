@@ -1,0 +1,26 @@
+{% extends "about_base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="about-content">
+        <div class="container">
+            <h1 class="center white-color about-header">O mnie</h1>
+            <img src="{% static 'img/django.jpg' %}" class="img-responsive center img-circle about-photo">
+            <p class="lead white-color">
+                Nazywam się Dawid Urbaniak, jestem junior developerem. Studiuję sobie na Politechnice Łódzkiej.
+                Mam Super dziewczynę Anię, która jest także moim najlepszym przyjacielem. Bardzo się kochamy ;*
+                Od niedawno pragramuję webowo, stworzyłem tego o to bloga od podstaw używając Django na backendzie natomiast na frontendzie używam jQuery, Bootstrap itp.
+            </p>
+            <h1 class="center white-color about-sub-header">Umiejętności</h1>
+            <div class="col-sm-4">
+                <div></div>
+            </div>
+            <div class="col-sm-4">
+
+            </div>
+            <div class="col-sm-4">
+
+            </div>
+        </div>
+    </div>
+{% endblock content %}

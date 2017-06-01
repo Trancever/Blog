@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.views import logout
 
+from django.views.generic import TemplateView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -29,6 +30,7 @@ urlpatterns = [
     url(r'^accounts/logout/$', logout, {'next_page': '/'}),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^api/posts/', include("posts.api.urls", namespace="posts-api")),
+    url(r'^about/me/$', TemplateView.as_view(template_name="about.html"), name="about"),
 ]
 
 if settings.DEBUG:

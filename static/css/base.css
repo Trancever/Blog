@@ -432,3 +432,37 @@ a:hover {
     color: #FFFFFF; float: right;
     font-size: 18px;
 }
+
+/**
+ * About page css
+ */
+
+.about-content {
+    background-image: url("../img/bg1.png");
+    background-repeat: repeat;
+    margin-top: 50px;
+}
+
+.white-color {
+    color: #ebe5c8;
+    font-family: "Lato", "proxima-nova", "Helvetica Neue", Arial, sans-serif;
+}
+
+.about-header {
+    padding: 40px 0;
+    margin-bottom: 50px;
+    font-size: 60px;
+    font-weight: 800;
+    border-bottom: solid 1px #ebe5c8;
+}
+
+.about-sub-header {
+    padding: 30px 0;
+    margin-bottom: 30px;
+    font-size: 50px;
+    font-weight: 700;
+}
+
+.about-photo {
+    margin-bottom: 40px;
+}
