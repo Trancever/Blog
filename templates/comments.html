@@ -37,8 +37,8 @@
                                         {{ comment.user }}{% endif %}</strong>
                                 <span class="text-muted">{{ comment.updated|timesince }} ago | <div id="children-amount"
                                                                                                     style="display: inline;">{{ comment.children.count }}
-                                Odpowied{% if comment.children.count > 1 or comment.children.count == 0 %}zi{% else %}
-                                        ź{% endif %} | </div><a href="#"
+                                Odpowied{% if comment.children.count > 1 or comment.children.count == 0 %}zi
+                                    {% else %}ź{% endif %} | </div><a href="#"
                                                                 class="comment-reply-btn">Pokaż</a>
                                     {% if user == comment.user %} |
                                         <a href="#" class="comment-edit-btn">Edytuj</a> |
