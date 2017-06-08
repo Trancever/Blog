@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^accounts/logout/$', logout, {'next_page': '/'}),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^api/posts/', include("posts.api.urls", namespace="posts-api")),
+    url(r'^api/comments/', include("comments.api.urls", namespace="comments-api")),
     url(r'^about/me/$', TemplateView.as_view(template_name="about.html"), name="about"),
 ]
 
