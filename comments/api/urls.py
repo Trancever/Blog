@@ -16,9 +16,8 @@ Including another URLconf
 """
 from django.conf.urls import url
 
-from .views import (PostListAPIView, PostDetailAPIView)
+from .views import CommentsListAPIView
 
 urlpatterns = [
-    url(r'^$', PostListAPIView.as_view(), name="post_list_api"),
-    url(r'^(?P<pk>\d+)/$', PostDetailAPIView.as_view(), name="post_detail_api"),
+    url(r'^list/$', CommentsListAPIView.as_view(), name="comment_list_api"),
 ]
